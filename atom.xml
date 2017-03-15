@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lisz.io/"/>
-  <updated>2017-03-15T07:03:28.000Z</updated>
+  <updated>2017-03-15T08:36:27.000Z</updated>
   <id>https://lisz.io/</id>
   
   <author>
@@ -16,14 +16,349 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>tencent-down</title>
+    <link href="https://lisz.io/2017/03/15/tencent-down/"/>
+    <id>https://lisz.io/2017/03/15/tencent-down/</id>
+    <published>2017-03-15T08:36:27.000Z</published>
+    <updated>2017-03-15T08:36:27.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu14.04安装composer+laravel配置</title>
+    <link href="https://lisz.io/2017/03/15/ubuntu-composer/"/>
+    <id>https://lisz.io/2017/03/15/ubuntu-composer/</id>
+    <published>2017-03-15T08:29:05.000Z</published>
+    <updated>2017-03-15T08:31:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>安装前提：系统已安装好php环境，可在全局使用php命令</p>
+<h1 id="安装compsoer并设置为全局调用"><a href="#安装compsoer并设置为全局调用" class="headerlink" title="安装compsoer并设置为全局调用"></a>安装compsoer并设置为全局调用</h1><pre><code class="bash">curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+</code></pre>
+<h1 id="使用composer建立laravel-installer安装工具"><a href="#使用composer建立laravel-installer安装工具" class="headerlink" title="使用composer建立laravel installer安装工具"></a>使用composer建立laravel installer安装工具</h1><pre><code class="bash">composer global require &quot;laravel/installer&quot;
+</code></pre>
+<h1 id="将laravel命令添加进用户环境变量"><a href="#将laravel命令添加进用户环境变量" class="headerlink" title="将laravel命令添加进用户环境变量"></a>将laravel命令添加进用户环境变量</h1><p>打开<code>~/.bashrc</code>文件最末添加命令：<code>PATH=$PATH:~/.composer/vendor/bin</code><br><code>source ~/.bashrc</code> 命令使环境变量变化生效</p>
+<h1 id="可以在全局使用laravel-new-应用名称-了"><a href="#可以在全局使用laravel-new-应用名称-了" class="headerlink" title="可以在全局使用laravel new {应用名称}了"></a>可以在全局使用laravel new {应用名称}了</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;安装前提：系统已安装好php环境，可在全局使用php命令&lt;/p&gt;
+&lt;h1 id=&quot;安装compsoer并设置为全局调用&quot;&gt;&lt;a href=&quot;#安装compsoer并设置为全局调用&quot; class=&quot;headerlink&quot; title=&quot;安装compsoer并设置为全局调用&quot;&gt;
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
+    
+      <category term="composer" scheme="https://lisz.io/tags/composer/"/>
+    
+      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu14.04常用美化、配置、软件安装（持续更新中。。。）</title>
+    <link href="https://lisz.io/2016/01/06/ubuntu-beatiful/"/>
+    <id>https://lisz.io/2016/01/06/ubuntu-beatiful/</id>
+    <published>2016-01-06T08:23:27.000Z</published>
+    <updated>2017-03-15T08:29:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一、安装扁平化主题"><a href="#一、安装扁平化主题" class="headerlink" title="一、安装扁平化主题"></a>一、安装扁平化主题</h1><ul>
+<li>1.安装ubuntu-tweak<pre><code class="bash">sudo add-apt-repository ppa:tualatrix/ppa
+sudo apt-get update
+sudo apt-get install ubuntu-tweak
+</code></pre>
+</li>
+<li>2.下载主题包文件<pre><code class="bash">wget –no-check-certificate https://github.com/anmoljagetia/Flatabulous/archive/master.zip
+</code></pre>
+下载好后解压到用户根目录的.themes文件夹（没有请使用<code>mkdir .themes</code>命令新建文件夹）</li>
+<li>3.安装图标<pre><code class="bash">sudo add-apt-repository ppa:noobslab/icons
+sudo apt-get update
+sudo apt-get install ultra-flat-icons
+</code></pre>
+也可<code>sudo apt-get install ultra-flat-icons-orange</code>或者<code>sudo apt-get install ultra-flat-icons-green</code>来安装其他两种颜色</li>
+<li>4.使用ubuntu-tweak图形化界面更改主题及图标即可<br>（该部分参考自<a href="http://www.jianshu.com/p/5b80711f304f" target="_blank" rel="external">http://www.jianshu.com/p/5b80711f304f</a>）</li>
+</ul>
+<h1 id="二、安装shadowsocks"><a href="#二、安装shadowsocks" class="headerlink" title="二、安装shadowsocks"></a>二、安装shadowsocks</h1><p>百度一下<code>ubuntu shadowsocks</code>的结果很凄惨，根本没有什么有用的，不过google还是挺厉害的，安装<code>shadowsocks-qt5</code>即可</p>
+<pre><code class="bash">sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo apt-get update
+sudo apt-get install shadowsocks-qt5
+</code></pre>
+<p>（该部分参考自<a href="https://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html" target="_blank" rel="external">https://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html</a>）</p>
+<h1 id="三、安装常用工具"><a href="#三、安装常用工具" class="headerlink" title="三、安装常用工具"></a>三、安装常用工具</h1><ul>
+<li>1.rinetd端口转发工具<pre><code class="bash">sudo apt-get install rinetd    (配置文件为/etc/rinetd.conf)
+</code></pre>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;一、安装扁平化主题&quot;&gt;&lt;a href=&quot;#一、安装扁平化主题&quot; class=&quot;headerlink&quot; title=&quot;一、安装扁平化主题&quot;&gt;&lt;/a&gt;一、安装扁平化主题&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;1.安装ubuntu-tweak&lt;pre&gt;&lt;code class=&quot;ba
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
+    
+      <category term="美化" scheme="https://lisz.io/tags/%E7%BE%8E%E5%8C%96/"/>
+    
+      <category term="软件安装" scheme="https://lisz.io/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu-14.04-lts安装配置nodejs+bower</title>
+    <link href="https://lisz.io/2015/12/23/ubuntu-nodejs/"/>
+    <id>https://lisz.io/2015/12/23/ubuntu-nodejs/</id>
+    <published>2015-12-23T08:16:16.000Z</published>
+    <updated>2017-03-15T08:21:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>强烈推荐方案二</p>
+</blockquote>
+<h1 id="一、方案一"><a href="#一、方案一" class="headerlink" title="一、方案一"></a>一、方案一</h1><p>安装准备：<code>pyhton，make，gcc，g++</code>均已安装</p>
+<ul>
+<li>第一步 将<code>nodejs的ppa源</code>加入系统    <code>$ sudo  add-apt-repository ppa:chris-lea/node.js</code></li>
+<li>第二步 更新系统软件源缓存并安装<code>nodejs</code>  <code>$sudo apt-get update  $ sudo apt-get install nodejs</code></li>
+<li>第三步 使用<code>npm</code>命令全局安装bower命令 <code>$ sudo npm install bower -g</code><br>到此<code>nodejs</code>和<code>bower</code>工具安装完成，接下来请享受<code>bower</code>工具带来的舒适吧！<br>注：$ 为<code>bash</code>命令行前标识符</li>
+</ul>
+<h1 id="二、方案二"><a href="#二、方案二" class="headerlink" title="二、方案二"></a>二、方案二</h1><p>由于国内直接访问软件源的网速不是很好，而且<code>apt源</code>的<code>nodejs</code>版本也不是很好，所以建议采用方案二——使用<code>NPM淘宝镜像</code>来实现</p>
+<ul>
+<li>第一步  在<code>https://npm.taobao.org/mirrors/node</code>中找到你想要的<code>nodejs</code>版本，建议采用<code>v4.4.3LTS版本</code>或者<code>the latest版本</code><br>参考命令为：<code>wget –no-check-certifica https://npm.taobao.org/mirrors/node/v4.4.3/node-v4.4.3-linux-x64.tar.gz</code><br>（因为实验时主机为<code>Ubuntu 14.04 LTS 64位</code>操作系统，所以选择<code>node-v4.4.3-linux-x64.tar.gz</code>）</li>
+<li>第二步 在用户根目录创建node文件夹，将下载的压缩包内容解压到该文件夹<br>参考命令为：<code>tar zxf node-v4.4.3-linux-x64.tar.gz ~/node/</code></li>
+<li>第三步  将node和npm命令加入用户环境变量<br>参考命令为： <code>vim .bashrc</code><br>在<code>.bashrc</code>文件的末尾加入<code>PATH=$PATH:~/node/bin</code><br><code>source .bashrc</code><br>（使该配置文件立即生效，如果不生效可以重新开个窗口试试<code>node -v</code> 是否会返回<code>v4.4.3</code>）<br>（这样的命令就是只能单用户使用，如果需要多用户使用，请将<code>node文件夹</code>设置在系统公用目录，然后将<code>bin</code>目录赋给权限<code>755</code>）</li>
+<li>第四步  安装cnpm<br>参考命令为：<code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code><br>到此为止，<code>cnpm</code>命令就可以完全替代<code>npm</code>进行使用，并且安装模块的速度杠杠的哦（毕竟是淘宝镜像源啊～）</li>
+<li>第五步  安装bower<br>参考命令：<code>cnpm install -g bower</code></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;强烈推荐方案二&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;一、方案一&quot;&gt;&lt;a href=&quot;#一、方案一&quot; class=&quot;headerlink&quot; title=&quot;一、方案一&quot;&gt;&lt;/a&gt;一、方案一&lt;/h1&gt;&lt;p&gt;安装准备：&lt;code&gt;pyhto
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
+    
+      <category term="nodejs" scheme="https://lisz.io/tags/nodejs/"/>
+    
+      <category term="bower" scheme="https://lisz.io/tags/bower/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows配置composer和laravel笔记</title>
+    <link href="https://lisz.io/2015/11/11/windows-composer/"/>
+    <id>https://lisz.io/2015/11/11/windows-composer/</id>
+    <published>2015-11-11T08:09:39.000Z</published>
+    <updated>2017-03-15T08:15:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一、安装及配置composer"><a href="#一、安装及配置composer" class="headerlink" title="一、安装及配置composer"></a>一、安装及配置composer</h1><ul>
+<li>1.由于getcomposer.org的服务器在国外，国内访问网速有点慢，所以采用了国内镜像（<a href="http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中" target="_blank" rel="external">http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中</a></li>
+<li>2.下载php至电脑上，并将php.exe所在文件夹位置添加至环境变量Path中</li>
+<li>3.在composer.phar所在文件夹按住Shift键点击鼠标右键选择“在此处打开cmd命令”，输入     <pre><code class="bash">echo @php &quot;%~dp0composer.phar&quot; %*&gt;composer.bat
+</code></pre>
+</li>
+<li>4.到这里，composer全局安装完成，在命令行中输入”composer -v”进行验证是否成功</li>
+<li>5.输入下列命令配置composer包和依赖库国内下载镜像<pre><code class="bash">composer config -g repositories.packagist composer https://packagist.phpcomposer.com
+</code></pre>
+</li>
+<li>6.composer配置已较为完善，试试看，访问速度还不错哟</li>
+</ul>
+<h1 id="二、安装laravel应用"><a href="#二、安装laravel应用" class="headerlink" title="二、安装laravel应用"></a>二、安装laravel应用</h1><p><a href="http://laravel-china.org/docs/5.0/installation" target="_blank" rel="external">laravel中文官网文档</a>是提供了两种安装方法，一种是采用配置laravel安装工具（反正我是按照配的结果安装应用时返回错误的），另一种是采用composer命令的方式安装，个人觉得第二种方法靠谱点，毕竟我用第二种方法就成功地创建了laravel应用（虽然命令稍微长一点）</p>
+<pre><code class="bash">composer create-project laravel/laravel blog  –prefer-dist
+</code></pre>
+<p>解释：composer create-project 就是使用composer工具创建项目的意思，laravel/laravel就是指明模板是什么， blog是你要创建的应用的名称，后面那个就是命令的参数</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;一、安装及配置composer&quot;&gt;&lt;a href=&quot;#一、安装及配置composer&quot; class=&quot;headerlink&quot; title=&quot;一、安装及配置composer&quot;&gt;&lt;/a&gt;一、安装及配置composer&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;1.由于getcompo
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="composer" scheme="https://lisz.io/tags/composer/"/>
+    
+      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
+    
+      <category term="windows" scheme="https://lisz.io/tags/windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的女儿</title>
+    <link href="https://lisz.io/2015/09/19/my-daughter/"/>
+    <id>https://lisz.io/2015/09/19/my-daughter/</id>
+    <published>2015-09-19T08:06:07.000Z</published>
+    <updated>2017-03-15T08:09:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="我的女儿"><a href="#我的女儿" class="headerlink" title="我的女儿"></a>我的女儿</h1><p>我的女儿是一个从小没有母亲的孩子<br>她的母亲在战火中牺牲<br>我却无能为力<br>所以我既是父亲也是母亲</p>
+<p>我的女儿是一个有很多姑姑的孩子<br>她的姑姑们教会她知识和美德<br>我却什么都没教她<br>所以我不是一个好父亲</p>
+<p>我的女儿是一个热衷于求知的孩子<br>一馆子的书是她最好的朋友<br>我却成不了她的朋友<br>所以她有超越我的智慧</p>
+<p>我的女儿是一个心怀天下的孩子<br>周游世界收获世间的真<br>我却不能伴着她、照顾她<br>所以她走得比我更远</p>
+<p>她是我的女儿<br>我是她的父亲<br>然而，她以我为榜样<br>我因她而骄傲</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;我的女儿&quot;&gt;&lt;a href=&quot;#我的女儿&quot; class=&quot;headerlink&quot; title=&quot;我的女儿&quot;&gt;&lt;/a&gt;我的女儿&lt;/h1&gt;&lt;p&gt;我的女儿是一个从小没有母亲的孩子&lt;br&gt;她的母亲在战火中牺牲&lt;br&gt;我却无能为力&lt;br&gt;所以我既是父亲也是母亲&lt;/p&gt;
+&lt;p
+    
+    </summary>
+    
+      <category term="传说中的杂文" scheme="https://lisz.io/categories/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E6%9D%82%E6%96%87/"/>
+    
+    
+      <category term="现代诗" scheme="https://lisz.io/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>作为码农，我们为什么要写作</title>
+    <link href="https://lisz.io/2015/08/12/why-write/"/>
+    <id>https://lisz.io/2015/08/12/why-write/</id>
+    <published>2015-08-12T07:56:22.000Z</published>
+    <updated>2017-03-15T08:05:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。</p>
+<h1 id="提高自己对知识的掌握层次"><a href="#提高自己对知识的掌握层次" class="headerlink" title="提高自己对知识的掌握层次"></a>提高自己对知识的掌握层次</h1><p>　　美国教育心理学家Bloom将知识认知分为了两个维度，其中认知历程维度又分为6个层次，分别为：记忆、理解、应用、分析、评鉴、创造。如下图所示，层次越高，表示对知识的掌握程度越深。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/071832044245186.png" alt="认知历程图" title="">
+                </div>
+                <div class="image-caption">认知历程图</div>
+            </figure><br>　　对于写作者来说，在写作过程中，因为需要对知识进行精确地表述，常常要对知识的细节再次的探索。在这个过程中，写作者可能会发现自己的观点不清晰的地方，通过二次学习，使自己的理解更加完善。写作者也可能会发现自己观点中的错误，从而改正自己的曲解。在经历过这段过程后，通常对于自己所写的知识的掌握程度，都上升了一个层次。<br>　　我自己的每次技术写作都经历了这样的提高过程。所以，我更多时候是把写作当成学习的一种方式。这种学习方式比普通的学习方式更加深入，效果更好。当然，花费的时间也更多。</p>
+<h1 id="提高表达和沟通的能力"><a href="#提高表达和沟通的能力" class="headerlink" title="提高表达和沟通的能力"></a>提高表达和沟通的能力</h1><p>　　作为一个程序员，日常的工作大部分时间都是面对电脑。许多人周末也喜欢当一个技术宅，待在家里上网、看电影或者玩游戏来消遣。长时间的面对机器，使得我们的语言表达能力极度衰退。而写作是一个很好的机会，让我们练习自己的表达能力。<br>　　长时间写作之后，你会更加注意平时沟通的语言。你的用词更加精准，表达更加生动。在表达能力提高的同时，你的沟通效率也得到提高。</p>
+<h1 id="接受读者的沟通和反馈"><a href="#接受读者的沟通和反馈" class="headerlink" title="接受读者的沟通和反馈"></a>接受读者的沟通和反馈</h1><p>　　当你的文章通过博客或者InfoQ网站发表出来后，你就会接着获得写作的第三个好处：来自读者的沟通和反馈。一篇好的文章通常会吸引一些读者回复，通过和读者的交流，你可以收获以下好处：</p>
+<ul>
+<li>错误内容反馈：尽管文章在写作时经历过二次学习，但是人难免会犯错。写作将你的思想完全暴露出来，有水平的读者可以指出你文章中的错误，从而使你对知识的理解更加准确。我的很多博客文章都有一些细微错误，通过读者的找反馈，我很快就将错误内容改正过来了，自己的水平也得到了提高。</li>
+<li>认识朋友：一个乐于分享的人总会比沉默寡言的人更招人喜欢。所以通过写作，你可以结交很多和你一样，乐于分享的朋友。</li>
+<li>了解更多相关信息：一些读者会回复说：”某某框架也用了这个技术方案”，或者是：”你的这个实现方案没有另一个某某开源方案好”。这些信息，作为你当前文章知识点的补充，使你能够了解更多相关的资料，再一次完善自己所学的知识。</li>
+</ul>
+<h1 id="影响力"><a href="#影响力" class="headerlink" title="影响力"></a>影响力</h1><p>　　当你持续的写作，坚持一年以上，你就会慢慢收获影响力。这个时候，你也会收到技术大会的分享邀请，出版社的约稿邀请，著名互联网公司的工作邀请，甚至是创业项目的合伙人邀请。你相比那些不分享的人，获得了更多的机会。当然你的技术观点也会被更多人接受，你也会收获到传递知识的乐趣。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>　　在写作过程中，你将收获提高自己对知识的掌握层次和提高表达和沟通的能力的好处。<br>　　在写作结束后，你将收获错误内容反馈、认识朋友和了解更多相关信息的好处。<br>　　在坚持写作一段时间，你将收获影响力和传递知识的乐趣。<br>　　另外，《暗时间》的作者刘未鹏在他的文章，也总结了很多写作的好处，大家也可以看看。<br>　　看了写作的这么多好处，你是否心动？那赶快创建一个博客，开始你的技术写作之旅吧！</p>
+<p>原文转载自<a href="http://kb.cnblogs.com/page/526625/" target="_blank" rel="external">作者：唐巧</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　　在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。不得
+    
+    </summary>
+    
+      <category term="哲学" scheme="https://lisz.io/categories/%E5%93%B2%E5%AD%A6/"/>
+    
+    
+      <category term="码农" scheme="https://lisz.io/tags/%E7%A0%81%E5%86%9C/"/>
+    
+      <category term="写作" scheme="https://lisz.io/tags/%E5%86%99%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux踢出其他正在SSH登陆用户</title>
+    <link href="https://lisz.io/2015/08/09/linux-del-sshuser/"/>
+    <id>https://lisz.io/2015/08/09/linux-del-sshuser/</id>
+    <published>2015-08-09T07:45:53.000Z</published>
+    <updated>2017-03-15T07:56:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在一些生产平台或者做安全审计的时候往往看到一大堆的用户SSH连接到同一台服务器，或者连接后没有正常关闭进程还驻留在系统内。限制SSH连接数与手动断开空闲连接也有必要之举，这里写出手动剔出其他用户的过程。</p>
+<h1 id="查看系统在线用户"><a href="#查看系统在线用户" class="headerlink" title="查看系统在线用户"></a>查看系统在线用户</h1><pre><code>[root@apache ~]# w 
+14:15:41 up 42 days, 56 min,  2 users,  load average: 0.07, 0.02, 0.00 
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT 
+root     pts/0    116.204.64.165   14:15    0.00s  0.06s  0.04s w 
+root     pts/1    116.204.64.165   14:15    2.00s  0.02s  0.02s –bash
+</code></pre><h1 id="查看当前自己占用终端，别把自己干掉了"><a href="#查看当前自己占用终端，别把自己干掉了" class="headerlink" title="查看当前自己占用终端，别把自己干掉了"></a>查看当前自己占用终端，别把自己干掉了</h1><pre><code>[root@apache ~]# who am i 
+root     pts/0        2013-01-16 14:15 (116.204.64.165)
+</code></pre><h1 id="用pkill-命令剔除对方"><a href="#用pkill-命令剔除对方" class="headerlink" title="用pkill 命令剔除对方"></a>用pkill 命令剔除对方</h1><pre><code>[root@apache ~]# pkill -kill -t pts/1
+</code></pre><h1 id="用w命令在看看干掉没。"><a href="#用w命令在看看干掉没。" class="headerlink" title="用w命令在看看干掉没。"></a>用w命令在看看干掉没。</h1><pre><code>[root@apache ~]# w 
+14:19:47 up 42 days,  1:00,  1 user,  load average: 0.00, 0.00, 0.00 
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT 
+root     pts/0    116.204.64.165   14:15    0.00s  0.03s  0.00s w
+</code></pre><p>后记：<br>如果最后查看还是没有干掉，建议加上-9 强制杀死。</p>
+<pre><code>[root@apache ~]# pkill -9 -t pts/1
+</code></pre><p>原文转自<a href="http://www.myhack58.com/Article/48/66/2013/37031.htm" target="_blank" rel="external">http://www.myhack58.com/Article/48/66/2013/37031.htm</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在一些生产平台或者做安全审计的时候往往看到一大堆的用户SSH连接到同一台服务器，或者连接后没有正常关闭进程还驻留在系统内。限制SSH连接数与手动断开空闲连接也有必要之举，这里写出手动剔出其他用户的过程。&lt;/p&gt;
+&lt;h1 id=&quot;查看系统在线用户&quot;&gt;&lt;a href=&quot;#查看系
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="linux" scheme="https://lisz.io/tags/linux/"/>
+    
+      <category term="踢出ssh用户" scheme="https://lisz.io/tags/%E8%B8%A2%E5%87%BAssh%E7%94%A8%E6%88%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Gravatar Fixed 头像载入出错</title>
+    <link href="https://lisz.io/2015/08/08/gravatar-error/"/>
+    <id>https://lisz.io/2015/08/08/gravatar-error/</id>
+    <published>2015-08-08T07:41:01.000Z</published>
+    <updated>2017-03-15T07:54:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>WordPress使用的用户默认头像是Gravatar Fixed 头像，由于种种原因，经常在国内载入出错。一般的解决办法有好几种，主要的是Gravatar Fixed 插件和修改wp-include中文件代码。</p>
+<h1 id="一、Gravatar-Fixed-插件"><a href="#一、Gravatar-Fixed-插件" class="headerlink" title="一、Gravatar Fixed 插件"></a>一、Gravatar Fixed 插件</h1><p>在管理后台搜索该插件，排在第一的应该是<code>FV Gravatar Cache</code>插件，然而这个插件需要使用到国外google的一些东西，所以载入也基本上是没什么戏。还是用第二种方法，虽然不能一劳永逸，但是不升级wordpress时还是蛮管用的。</p>
+<h1 id="二、修改wp-include目录下的link-template-php文件（大约在3604行）"><a href="#二、修改wp-include目录下的link-template-php文件（大约在3604行）" class="headerlink" title="二、修改wp-include目录下的link-template.php文件（大约在3604行）"></a>二、修改wp-include目录下的<code>link-template.php</code>文件（大约在3604行）</h1><p>1.使用vi工具编辑该文件，按esc键，直接输入<code>3604gg</code>（无回显），代码就会自动跳转到指定的3604行<br>2.按照下面修改：</p>
+<pre><code class="bash">$url = sprintf(‘http://%d.gravatar.com/avatar/%s’, $gravatar_server, $email_hash );
+</code></pre>
+<p>修改为</p>
+<pre><code class="bash">$url = sprintf(‘http://cn.gravatar.com/avatar/%s’, $email_hash );
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;WordPress使用的用户默认头像是Gravatar Fixed 头像，由于种种原因，经常在国内载入出错。一般的解决办法有好几种，主要的是Gravatar Fixed 插件和修改wp-include中文件代码。&lt;/p&gt;
+&lt;h1 id=&quot;一、Gravatar-Fixed-插
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="gravatar" scheme="https://lisz.io/tags/gravatar/"/>
+    
+      <category term="wordpress" scheme="https://lisz.io/tags/wordpress/"/>
+    
+  </entry>
+  
+  <entry>
     <title>解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题</title>
     <link href="https://lisz.io/2015/08/08/wordpress-ftp/"/>
     <id>https://lisz.io/2015/08/08/wordpress-ftp/</id>
     <published>2015-08-08T06:24:10.000Z</published>
-    <updated>2017-03-15T07:03:28.000Z</updated>
+    <updated>2017-03-15T07:18:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天正式将原来博客网站转移至VPS中，原博客域名 <code>www.wl27.cn</code> 正式改为 <code>blog.wl27.cn</code> 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是<code>Ubuntu 14.04 LTS</code>版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提供FTP信息的界面。有这样的字样提示”要执行请求的操作，WordPress需要访问您网页服务器的权限。请输入您的FTP登陆凭据以继续。如果您忘记了您的登陆凭据(如用户名、密码)，请联系您的网站托管商”。<br>解决这样一个问题，其实只需要我们可以给自己的WP网站授权就可以了。</p>
-<pre><code class="shell">chown -R www /home/wwwroot/blog.wl27.cn(修改成网站域名目录)
+<pre><code class="bash">chown -R www /home/wwwroot/blog.wl27.cn(修改成网站域名目录)
 </code></pre>
 ]]></content>
     

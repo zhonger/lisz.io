@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://lisz.io/2015/08/08/wordpress-ftp/index.html">
 <meta property="og:site_name" content="Mr Li">
 <meta property="og:description" content="今天正式将原来博客网站转移至VPS中，原博客域名 www.wl27.cn 正式改为 blog.wl27.cn 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是Ubuntu 14.04 LTS版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提">
-<meta property="og:updated_time" content="2017-03-15T07:03:28.000Z">
+<meta property="og:updated_time" content="2017-03-15T07:18:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题">
 <meta name="twitter:description" content="今天正式将原来博客网站转移至VPS中，原博客域名 www.wl27.cn 正式改为 blog.wl27.cn 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是Ubuntu 14.04 LTS版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提">
@@ -35,7 +35,6 @@
     
     <link rel="shortcut icon" href="/images/tree2.ico">
     <link rel="stylesheet" href="/css/style.css?v=1.4.10">
-    <link rel="stylesheet" href="/css/tranquil-heart.min.css" type="text/css">
     <script>window.lazyScripts=[]</script>
 </head>
 
@@ -181,7 +180,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>今天正式将原来博客网站转移至VPS中，原博客域名 <code>www.wl27.cn</code> 正式改为 <code>blog.wl27.cn</code> 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是<code>Ubuntu 14.04 LTS</code>版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提供FTP信息的界面。有这样的字样提示”要执行请求的操作，WordPress需要访问您网页服务器的权限。请输入您的FTP登陆凭据以继续。如果您忘记了您的登陆凭据(如用户名、密码)，请联系您的网站托管商”。<br>解决这样一个问题，其实只需要我们可以给自己的WP网站授权就可以了。</p>
-<pre><code class="shell">chown -R www /home/wwwroot/blog.wl27.cn(修改成网站域名目录)
+<pre><code class="bash">chown -R www /home/wwwroot/blog.wl27.cn(修改成网站域名目录)
 </code></pre>
 
         </div>
@@ -190,7 +189,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-03-15T07:03:28.000Z" itemprop="dateUpdated">2017年3月15日 15:03</time>
+    最后更新时间：<time datetime="2017-03-15T07:18:52.000Z" itemprop="dateUpdated">2017年3月15日 15:18</time>
 </span><br>
 
 
@@ -264,7 +263,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/08/08/gravatar-error/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Gravatar Fixed 头像载入出错</h4>
+      </a>
+    </div>
   
 
   
@@ -330,16 +336,6 @@ lazyScripts.push('/js/embed.min.js?v=1.4.10');
         </p>
     </div>
 </footer>
-
-
-<script src="/js/prettify.js" type="text/javascript"></script>
-<script type="text/javascript">
-$(window).load(function(){
-     $("pre").addClass("prettyprint linenums");
-     prettyPrint();
-})
-</script>
-
     </main>
     <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
@@ -427,6 +423,8 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
 
 
 </body>

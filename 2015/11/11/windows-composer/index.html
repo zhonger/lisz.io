@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>windows配置composer和laravel笔记 | Mr Li | zhonger’s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="composer,laravel,windows">
+    <meta name="description" content="一、安装及配置composer
+1.由于getcomposer.org的服务器在国外，国内访问网速有点慢，所以采用了国内镜像（http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中
+2.下载php至电脑上，并将php.exe所在文件夹位置添加至环境变量Path中
+3.在composer.phar所在文件夹按住S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows配置composer和laravel笔记">
+<meta property="og:url" content="https://lisz.io/2015/11/11/windows-composer/index.html">
+<meta property="og:site_name" content="Mr Li">
+<meta property="og:description" content="一、安装及配置composer
+1.由于getcomposer.org的服务器在国外，国内访问网速有点慢，所以采用了国内镜像（http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中
+2.下载php至电脑上，并将php.exe所在文件夹位置添加至环境变量Path中
+3.在composer.phar所在文件夹按住S">
+<meta property="og:updated_time" content="2017-03-15T08:15:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows配置composer和laravel笔记">
+<meta name="twitter:description" content="一、安装及配置composer
+1.由于getcomposer.org的服务器在国外，国内访问网速有点慢，所以采用了国内镜像（http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中
+2.下载php至电脑上，并将php.exe所在文件夹位置添加至环境变量Path中
+3.在composer.phar所在文件夹按住S">
+    
+        <link rel="alternative" href="/atom.xml" title="Mr Li" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/images/tree2.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/images/201233182266986.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhonger</h5>
+          <a href="mailto:wuwozhonger@gmail.com" title="wuwozhonger@gmail.com" class="mail">wuwozhonger@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签云
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zhonger" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/lishengzhou" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">windows配置composer和laravel笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">windows配置composer和laravel笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-11-11T08:09:39.000Z" itemprop="datePublished" class="page-time">
+  2015-11-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一、安装及配置composer"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、安装及配置composer</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二、安装laravel应用"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、安装laravel应用</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-windows-composer"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">windows配置composer和laravel笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015年11月11日 16:09" datetime="2015-11-11T08:09:39.000Z"  itemprop="datePublished">2015-11-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="一、安装及配置composer"><a href="#一、安装及配置composer" class="headerlink" title="一、安装及配置composer"></a>一、安装及配置composer</h1><ul>
+<li>1.由于getcomposer.org的服务器在国外，国内访问网速有点慢，所以采用了国内镜像（<a href="http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中" target="_blank" rel="external">http://packagist.cn/）获得composer.phar包，将composer.phar所在文件夹位置添加至环境变量Path中</a></li>
+<li>2.下载php至电脑上，并将php.exe所在文件夹位置添加至环境变量Path中</li>
+<li>3.在composer.phar所在文件夹按住Shift键点击鼠标右键选择“在此处打开cmd命令”，输入     <pre><code class="bash">echo @php &quot;%~dp0composer.phar&quot; %*&gt;composer.bat
+</code></pre>
+</li>
+<li>4.到这里，composer全局安装完成，在命令行中输入”composer -v”进行验证是否成功</li>
+<li>5.输入下列命令配置composer包和依赖库国内下载镜像<pre><code class="bash">composer config -g repositories.packagist composer https://packagist.phpcomposer.com
+</code></pre>
+</li>
+<li>6.composer配置已较为完善，试试看，访问速度还不错哟</li>
+</ul>
+<h1 id="二、安装laravel应用"><a href="#二、安装laravel应用" class="headerlink" title="二、安装laravel应用"></a>二、安装laravel应用</h1><p><a href="http://laravel-china.org/docs/5.0/installation" target="_blank" rel="external">laravel中文官网文档</a>是提供了两种安装方法，一种是采用配置laravel安装工具（反正我是按照配的结果安装应用时返回错误的），另一种是采用composer命令的方式安装，个人觉得第二种方法靠谱点，毕竟我用第二种方法就成功地创建了laravel应用（虽然命令稍微长一点）</p>
+<pre><code class="bash">composer create-project laravel/laravel blog  –prefer-dist
+</code></pre>
+<p>解释：composer create-project 就是使用composer工具创建项目的意思，laravel/laravel就是指明模板是什么， blog是你要创建的应用的名称，后面那个就是命令的参数</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-15T08:15:19.000Z" itemprop="dateUpdated">2017年3月15日 16:15</time>
+</span><br>
+
+
+        转载请注明来源：<a href="/2015/11/11/windows-composer/" target="_blank" rel="external">https://lisz.io/2015/11/11/windows-composer/</a>
+    </div>
+    <footer>
+        <a href="https://lisz.io">
+            <img src="/images/201233182266986.jpg" alt="zhonger">
+            zhonger
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/composer/">composer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/">windows</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2015/11/11/windows-composer/&title=《windows配置composer和laravel笔记》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2015/11/11/windows-composer/&title=《windows配置composer和laravel笔记》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2015/11/11/windows-composer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《windows配置composer和laravel笔记》 — Mr Li&url=https://lisz.io/2015/11/11/windows-composer/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2015/11/11/windows-composer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/12/23/ubuntu-nodejs/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ubuntu-14.04-lts安装配置nodejs+bower</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/09/19/my-daughter/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">我的女儿</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="windows-composer" data-title="windows配置composer和laravel笔记" data-url="https://lisz.io/2015/11/11/windows-composer/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'lishengzhou', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Mr Li &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2015/11/11/windows-composer/&title=《windows配置composer和laravel笔记》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2015/11/11/windows-composer/&title=《windows配置composer和laravel笔记》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2015/11/11/windows-composer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《windows配置composer和laravel笔记》 — Mr Li&url=https://lisz.io/2015/11/11/windows-composer/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2015/11/11/windows-composer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQXKDMBAEQP//0+SaqgQ8s8IHi+aUimNBc5jsavV6xddxcv3+9O9f/l3hbLXr7952YWBgfC3juLySG7d3OYMl4FMqBgbGAxhnN77+Of9WDktWwMDAwGgZs2Jx5UVgYGBg3BWySYmZl4wYGBgYK0uvFItt83xDL46BgfGFjJVy7dM/f2S+gYGB8VWMo7zaAWQbl8fowsDA2JuRB9ysIEsKwahBTZ4HAwNjU8YsXvO4bI9ZzJpkDAyMvRnXYTo78nW9Tj7+TA5e/PN/AwMDYzvGXccs8kFmW/YVUYuBgfEYRttY5tttSZnYVnqngYuBgbERY9bW3lU4tq+m2OzDwMDYlNFuqCWxmHzaxu6bb2FgYDyAsRKUeck4G4JGa2JgYGzHqONstEnXlqH1QQ0MDIytGeutbL5Nlkf5SsOMgYGxH+OuB20ffVY+vjlsgYGB8RhGG4ttRM5e3NIwAAMDYwtGEW1xAdeOIWcDTgwMjCcwZkVbvq2WhHi+xRZNNjAwMLZmtMXijNQ2scVrwsDAeAwj2eJfb1nzIC6eDQMD4zGMdom8iJzdqxiOYmBgbMo4yisp0ZIVVo5inBaFGBgYmzJWhp35Quuh3JakGBgY+zFmETkrItsDZHUTi4GBsTUjCco2iGe/aeMbAwMDIx83rkTzbOT5yqcTGBgYD2O01HZgORwnYGBgPICRF3kro4K20f1IL46BgfGFjLZ1zCN16QxIOdTEwMDYlPEDAdXk84Wg640AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+
+
+</body>
+</html>
