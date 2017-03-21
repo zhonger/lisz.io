@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Gravatar Fixed 头像载入出错 | Mr Li | zhonger’s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="gravatar,wordpress">
+    <meta name="description" content="WordPress使用的用户默认头像是Gravatar Fixed 头像，由于种种原因，经常在国内载入出错。一般的解决办法有好几种，主要的是Gravatar Fixed 插件和修改wp-include中文件代码。
+一、Gravatar Fixed 插件在管理后台搜索该插件，排在第一的应该是FV Gravatar Cache插件，然而这个插件需要使用到国外google的一些东西，所以载入也基本上是没">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gravatar Fixed 头像载入出错">
+<meta property="og:url" content="https://lisz.io/2015/08/08/gravatar-error/index.html">
+<meta property="og:site_name" content="Mr Li">
+<meta property="og:description" content="WordPress使用的用户默认头像是Gravatar Fixed 头像，由于种种原因，经常在国内载入出错。一般的解决办法有好几种，主要的是Gravatar Fixed 插件和修改wp-include中文件代码。
+一、Gravatar Fixed 插件在管理后台搜索该插件，排在第一的应该是FV Gravatar Cache插件，然而这个插件需要使用到国外google的一些东西，所以载入也基本上是没">
+<meta property="og:updated_time" content="2017-03-15T07:54:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gravatar Fixed 头像载入出错">
+<meta name="twitter:description" content="WordPress使用的用户默认头像是Gravatar Fixed 头像，由于种种原因，经常在国内载入出错。一般的解决办法有好几种，主要的是Gravatar Fixed 插件和修改wp-include中文件代码。
+一、Gravatar Fixed 插件在管理后台搜索该插件，排在第一的应该是FV Gravatar Cache插件，然而这个插件需要使用到国外google的一些东西，所以载入也基本上是没">
+    
+        <link rel="alternative" href="/atom.xml" title="Mr Li" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/images/tree2.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/images/201233182266986.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhonger</h5>
+          <a href="mailto:wuwozhonger@gmail.com" title="wuwozhonger@gmail.com" class="mail">wuwozhonger@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签云
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zhonger" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/lishengzhou" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Gravatar Fixed 头像载入出错</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Gravatar Fixed 头像载入出错</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-08-08T07:41:01.000Z" itemprop="datePublished" class="page-time">
+  2015-08-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一、Gravatar-Fixed-插件"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、Gravatar Fixed 插件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二、修改wp-include目录下的link-template-php文件（大约在3604行）"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、修改wp-include目录下的link-template.php文件（大约在3604行）</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-gravatar-error"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Gravatar Fixed 头像载入出错</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015年08月08日 15:41" datetime="2015-08-08T07:41:01.000Z"  itemprop="datePublished">2015-08-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>WordPress使用的用户默认头像是Gravatar Fixed 头像，由于种种原因，经常在国内载入出错。一般的解决办法有好几种，主要的是Gravatar Fixed 插件和修改wp-include中文件代码。</p>
+<h1 id="一、Gravatar-Fixed-插件"><a href="#一、Gravatar-Fixed-插件" class="headerlink" title="一、Gravatar Fixed 插件"></a>一、Gravatar Fixed 插件</h1><p>在管理后台搜索该插件，排在第一的应该是<code>FV Gravatar Cache</code>插件，然而这个插件需要使用到国外google的一些东西，所以载入也基本上是没什么戏。还是用第二种方法，虽然不能一劳永逸，但是不升级wordpress时还是蛮管用的。</p>
+<h1 id="二、修改wp-include目录下的link-template-php文件（大约在3604行）"><a href="#二、修改wp-include目录下的link-template-php文件（大约在3604行）" class="headerlink" title="二、修改wp-include目录下的link-template.php文件（大约在3604行）"></a>二、修改wp-include目录下的<code>link-template.php</code>文件（大约在3604行）</h1><p>1.使用vi工具编辑该文件，按esc键，直接输入<code>3604gg</code>（无回显），代码就会自动跳转到指定的3604行<br>2.按照下面修改：</p>
+<pre><code class="bash">$url = sprintf(‘http://%d.gravatar.com/avatar/%s’, $gravatar_server, $email_hash );
+</code></pre>
+<p>修改为</p>
+<pre><code class="bash">$url = sprintf(‘http://cn.gravatar.com/avatar/%s’, $email_hash );
+</code></pre>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-15T07:54:27.000Z" itemprop="dateUpdated">2017年3月15日 15:54</time>
+</span><br>
+
+
+        转载请注明来源：<a href="/2015/08/08/gravatar-error/" target="_blank" rel="external">https://lisz.io/2015/08/08/gravatar-error/</a>
+    </div>
+    <footer>
+        <a href="https://lisz.io">
+            <img src="/images/201233182266986.jpg" alt="zhonger">
+            zhonger
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gravatar/">gravatar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2015/08/08/gravatar-error/&title=《Gravatar Fixed 头像载入出错》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2015/08/08/gravatar-error/&title=《Gravatar Fixed 头像载入出错》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2015/08/08/gravatar-error/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Gravatar Fixed 头像载入出错》 — Mr Li&url=https://lisz.io/2015/08/08/gravatar-error/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2015/08/08/gravatar-error/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/08/09/linux-del-sshuser/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux踢出其他正在SSH登陆用户</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/08/08/wordpress-ftp/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="gravatar-error" data-title="Gravatar Fixed 头像载入出错" data-url="https://lisz.io/2015/08/08/gravatar-error/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'lishengzhou', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Mr Li &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2015/08/08/gravatar-error/&title=《Gravatar Fixed 头像载入出错》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2015/08/08/gravatar-error/&title=《Gravatar Fixed 头像载入出错》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2015/08/08/gravatar-error/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Gravatar Fixed 头像载入出错》 — Mr Li&url=https://lisz.io/2015/08/08/gravatar-error/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2015/08/08/gravatar-error/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABw0lEQVR42u3aQY7DIAwF0N7/0p3tSFU7/+NAM9JjVUUNPLKwbMPjEY/nr/Hu+et4/efn2S4buLi4Y26yZPs8gX5+/nZOXFzcg9xkmXrqkvv5XVxc3PtzJylRPicuLu7/4k7Km6/FXVxc3JKbFD/JYpO3Lq7VcHFxpxVK1KXc93tLfxcXF3eJ+yxHkqaszRC9i4uLe4Q7aXNMEpH8LVxc3PPcPMTsK5by4xZcXNwz3Ha69kh1rWkSpTi4uLibuW3LMrlctXZkUjRQcHFxt3HzhZNG6lpQywMoLi7ueW4betqLF/mcdS6Gi4t7KTefaK1V2m4+ObDBxcU9yU1AdUW1dAHrj03i4uJu5iYT1SnIIBmKih9cXNzN3HaBUUd2qZnSfg5cXNyruEkjo91GEv7alAgXF/db3PaQNS+W8oKnqNVwcXE3c5NEJ184P2JpEyBcXNzd3Gc52iPSNul5zL8ZLi7ulZ3MYmNrhdDahYzFzeDi4o65u4NXXvBEXxQXF/cgdx6G8qPZLbUaLi7uDbhtUEvar0XFhouLezNue7lqXntFRym4uLgbuO0haJv6XNY0wcXFPcJtQ8natYn5xQ5cXNwj3B9pP+IxGU0t/QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+
+
+</body>
+</html>

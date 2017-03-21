@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题 | Mr Li | zhonger’s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vps,ftp,wordpress主题安装">
+    <meta name="description" content="今天正式将原来博客网站转移至VPS中，原博客域名 www.wl27.cn 正式改为 blog.wl27.cn 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是Ubuntu 14.04 LTS版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题">
+<meta property="og:url" content="https://lisz.io/2015/08/08/wordpress-ftp/index.html">
+<meta property="og:site_name" content="Mr Li">
+<meta property="og:description" content="今天正式将原来博客网站转移至VPS中，原博客域名 www.wl27.cn 正式改为 blog.wl27.cn 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是Ubuntu 14.04 LTS版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提">
+<meta property="og:updated_time" content="2017-03-15T07:18:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题">
+<meta name="twitter:description" content="今天正式将原来博客网站转移至VPS中，原博客域名 www.wl27.cn 正式改为 blog.wl27.cn 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是Ubuntu 14.04 LTS版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提">
+    
+        <link rel="alternative" href="/atom.xml" title="Mr Li" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/images/tree2.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/images/201233182266986.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhonger</h5>
+          <a href="mailto:wuwozhonger@gmail.com" title="wuwozhonger@gmail.com" class="mail">wuwozhonger@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签云
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zhonger" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/lishengzhou" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-08-08T06:24:10.000Z" itemprop="datePublished" class="page-time">
+  2015-08-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-wordpress-ftp"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015年08月08日 14:24" datetime="2015-08-08T06:24:10.000Z"  itemprop="datePublished">2015-08-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>今天正式将原来博客网站转移至VPS中，原博客域名 <code>www.wl27.cn</code> 正式改为 <code>blog.wl27.cn</code> 。在VPS中搭建Wordpress博客，和使用主机空间搭建稍微有些不同。我使用的这台VPS是<code>Ubuntu 14.04 LTS</code>版本系统，采用LNMP一键架设整个服务坏境。在和使用主机空间搭建一样完成之后，由于Linux安全权限原因，我在网站后台升级、安全主题或者插件的时候，会出现提示需要我提供FTP信息的界面。有这样的字样提示”要执行请求的操作，WordPress需要访问您网页服务器的权限。请输入您的FTP登陆凭据以继续。如果您忘记了您的登陆凭据(如用户名、密码)，请联系您的网站托管商”。<br>解决这样一个问题，其实只需要我们可以给自己的WP网站授权就可以了。</p>
+<pre><code class="bash">chown -R www /home/wwwroot/blog.wl27.cn(修改成网站域名目录)
+</code></pre>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-15T07:18:52.000Z" itemprop="dateUpdated">2017年3月15日 15:18</time>
+</span><br>
+
+
+        转载请注明来源：<a href="/2015/08/08/wordpress-ftp/" target="_blank" rel="external">https://lisz.io/2015/08/08/wordpress-ftp/</a>
+    </div>
+    <footer>
+        <a href="https://lisz.io">
+            <img src="/images/201233182266986.jpg" alt="zhonger">
+            zhonger
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ftp/">ftp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vps/">vps</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress主题安装/">wordpress主题安装</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2015/08/08/wordpress-ftp/&title=《解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2015/08/08/wordpress-ftp/&title=《解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2015/08/08/wordpress-ftp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题》 — Mr Li&url=https://lisz.io/2015/08/08/wordpress-ftp/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2015/08/08/wordpress-ftp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/08/08/gravatar-error/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Gravatar Fixed 头像载入出错</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/08/08/web-show/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">小小网页秀</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="wordpress-ftp" data-title="解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题" data-url="https://lisz.io/2015/08/08/wordpress-ftp/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'lishengzhou', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Mr Li &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2015/08/08/wordpress-ftp/&title=《解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2015/08/08/wordpress-ftp/&title=《解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2015/08/08/wordpress-ftp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《解决VPS升级/安装WordPress主题及插件需要输入FTP账户和密码的问题》 — Mr Li&url=https://lisz.io/2015/08/08/wordpress-ftp/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2015/08/08/wordpress-ftp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvUlEQVR42u3aS47CMBAFwNz/0mE7EuB57bYNSOUVCsGpsGj1x9cVr/vNSu78e/35nmvHwsXFbXPv4RojnvcZX8/3f/ssXFzcg9zkMTtY+Z64uLi/wq0mK52/ABcX95u51eA1rl9wcXG/mZsUP1VWTtxSq+Hi4ja4q1KTzuct/V1cXNwp7l1ceXKT71D4LS4u7hFuHlDWTnHz3XBxcc9z82HnuICpHraohsUrfzwuLm6bO/5x//rcSKac4uDi4i7lVgce1TZrdSTzz4vh4uIe586NSPMQ1kl9cHFxT3I7Q5TqmCQforSGrLi4uG1ulFgEAShpmuTQcsMUFxd3Gzdvg1a/7dzzovjBxcXdzM0LjCq6uk+h+MHFxT3OraYyc42M6itFtREuLu5mbrVt2g9/ebDDxcU9z507bpWHvE5ZhYuLe567aqySH7CYS4BwcXF3c+/imkPPFVG4uLif4lYPYSTlSv/oRutgFi4u7iLuXPDK6WtHubi4uCe5eRiqQg/Vari4uB/lJi/TD3O4uLi/yB03QZLRS7X0wsXFPc+dG4Lm91TbItFMGBcXdxu3HEqmglT1uMaC/i4uLu4M9wGsC3GwsO9RRAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+
+
+</body>
+</html>
