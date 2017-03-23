@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lisz.io/"/>
-  <updated>2017-03-15T08:36:27.000Z</updated>
+  <updated>2017-03-23T13:59:47.000Z</updated>
   <id>https://lisz.io/</id>
   
   <author>
@@ -16,13 +16,19 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>tencent-down</title>
+    <title>腾讯云服务器重装系统后……</title>
     <link href="https://lisz.io/2017/03/15/tencent-down/"/>
     <id>https://lisz.io/2017/03/15/tencent-down/</id>
     <published>2017-03-15T08:36:27.000Z</published>
-    <updated>2017-03-15T08:36:27.000Z</updated>
+    <updated>2017-03-23T13:59:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一、添加用户并设为sudo权限"><a href="#一、添加用户并设为sudo权限" class="headerlink" title="一、添加用户并设为sudo权限"></a>一、添加用户并设为sudo权限</h1><p><code>sudo useradd 用户名</code><br><code>sudo passwd 用户名</code><br><code>sudo chmod +w /etc/sudoers</code><br><code>sudo vi  /etc/sudoers (加入 用户名 ALL=(ALL:ALL) ALL )</code></p>
+<h1 id="二、更改用户linux的shell的操作方法"><a href="#二、更改用户linux的shell的操作方法" class="headerlink" title="二、更改用户linux的shell的操作方法"></a>二、更改用户linux的shell的操作方法</h1><p>查看当前用户的shell方式 <code>echo $SHELL</code>    输出 <code>/bin/sh</code><br>更换shell操作方式为<code>/bin/bash</code>   <code>sudo vi /etc/passwd</code>  在用户行尾加上<code>/bin/bash</code><br>退出系统再次登录</p>
+]]></content>
     
     <summary type="html">
+    
+      &lt;h1 id=&quot;一、添加用户并设为sudo权限&quot;&gt;&lt;a href=&quot;#一、添加用户并设为sudo权限&quot; class=&quot;headerlink&quot; title=&quot;一、添加用户并设为sudo权限&quot;&gt;&lt;/a&gt;一、添加用户并设为sudo权限&lt;/h1&gt;&lt;p&gt;&lt;code&gt;sudo useradd
     
     </summary>
     
@@ -34,7 +40,7 @@
     <link href="https://lisz.io/2017/03/15/ubuntu-composer/"/>
     <id>https://lisz.io/2017/03/15/ubuntu-composer/</id>
     <published>2017-03-15T08:29:05.000Z</published>
-    <updated>2017-03-15T08:31:10.000Z</updated>
+    <updated>2017-03-15T16:27:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>安装前提：系统已安装好php环境，可在全局使用php命令</p>
 <h1 id="安装compsoer并设置为全局调用"><a href="#安装compsoer并设置为全局调用" class="headerlink" title="安装compsoer并设置为全局调用"></a>安装compsoer并设置为全局调用</h1><pre><code class="bash">curl -sS https://getcomposer.org/installer | php
