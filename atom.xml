@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lisz.io/"/>
-  <updated>2017-03-23T13:59:47.000Z</updated>
+  <updated>2017-03-23T14:27:46.000Z</updated>
   <id>https://lisz.io/</id>
   
   <author>
@@ -16,11 +16,129 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>laravel5.2在lnmpa一键安装包环境下的部署</title>
+    <link href="https://lisz.io/2016/03/14/laravel-lnmpa/"/>
+    <id>https://lisz.io/2016/03/14/laravel-lnmpa/</id>
+    <published>2016-03-14T14:19:48.000Z</published>
+    <updated>2017-03-23T14:27:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h1><p>1.阿里云ECS服务器：<code>ubuntu14.04LTS 64位</code><br>2.使用<code>lnmp.org</code>提供的<code>linux+nginx+mysql+apache+php</code>一键安装包，已安装lnmpa<br>3.其他条件满足（Git工具和ssh私钥、<code>composer</code>工具、<code>bower</code>工具）</p>
+<h1 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h1><p>1.将<code>php命令</code>添加到系统环境变量中：往<code>/etc/enviroment</code>文件中添加”:<code>/usr/local/php/bin</code>（该路径为php命令所在目录，前面一定要包含冒号）<br>2.修改<code>php.ini</code>：将<code>proc_get_status,proc_open</code>从<code>disable_functions</code>中去掉<br>3.使用<code>sudo lnmp vhost add</code>命令添加虚拟主机，自动在<code>/usr/local/nginx/conf/vhost</code>和<code>/usr/local/apache/conf/vhost</code>生成<code>“域名.conf”</code><br>4.修改<code>nginx</code>中的<code>“域名.conf”</code>文件的<code>root目录</code>为<code>laravel的根目录/public</code>（比如使用<code>composer create-project laravel/laravel laravel</code>命令生成的laravel目录）<br>5.修改<code>apache</code>中的“域名.conf”文件：open_basedir 后面的路径同上一步中的laravel的根目录，Document root和Directory后面的路径为“laravel根目录/public”，这是域名绑定的入口目录<br>6.使用git工具将github或oschina.net的代码克隆至域名绑定<code>root目录</code>，使用<code>chmod 777 -R storage</code>命令给<code>storage文件夹读写权限</code><br>7.使用<code>composer install</code>和<code>bower install</code>命令安装相关php依赖和前端依赖<br>就这样，laravel就可以正常运行在lnmpa环境中了</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><blockquote>
+<p>问题一：打开空白，使用浏览器控制台查看network为<code>500错误</code>？</p>
+</blockquote>
+<p>解决方法：<br>1.检查是否使用<code>composer</code>安装好<code>php函数依赖</code>；<br>2.检查<code>storage文件夹</code>是否有读写权限；<br>3.检查<code>apache</code>的虚拟主机配置文件中的<code>open_basedir</code>和<code>Directory目录</code>是否正确；</p>
+<blockquote>
+<p>问题二：<code>composer install</code>命令执行返回<code>proc_open()</code>和<code>proc_get_status()</code>两个函数不能正常使用？</p>
+</blockquote>
+<p>解决办法：修改<code>php.ini</code>中<code>disable_functions()</code></p>
+<blockquote>
+<p>问题三：页面<code>css</code>和<code>js</code>资源不能正常引用？</p>
+</blockquote>
+<p>解决办法：修改<code>nginx</code>的虚拟主机配置文件的root目录为laravel应用程序的根目录，而非public目录</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;实验环境&quot;&gt;&lt;a href=&quot;#实验环境&quot; class=&quot;headerlink&quot; title=&quot;实验环境&quot;&gt;&lt;/a&gt;实验环境&lt;/h1&gt;&lt;p&gt;1.阿里云ECS服务器：&lt;code&gt;ubuntu14.04LTS 64位&lt;/code&gt;&lt;br&gt;2.使用&lt;code&gt;lnmp.
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
+    
+      <category term="lnmpa" scheme="https://lisz.io/tags/lnmpa/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows安装配置python 3.5.1+pip 8.1.0 +django 1.9.4</title>
+    <link href="https://lisz.io/2016/03/08/windows-pip/"/>
+    <id>https://lisz.io/2016/03/08/windows-pip/</id>
+    <published>2016-03-08T14:12:49.000Z</published>
+    <updated>2017-03-23T14:18:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="下载并安装python3-5-1"><a href="#下载并安装python3-5-1" class="headerlink" title="下载并安装python3.5.1"></a>下载并安装python3.5.1</h1><blockquote>
+<p>python官网：<a href="https://www.python.org/downloads/" target="_blank" rel="external">https://www.python.org/downloads/</a></p>
+</blockquote>
+<ul>
+<li>下载完毕后，点击<code>.exe</code>文件直接安装，安装选项可以选择配置<code>python</code>到系统变量、安装<code>pip</code>工具</li>
+<li>在<code>cmd窗口</code>使用<code>python</code>命令检查<code>python</code>是否安装成功（成功的话会进入<code>python shell</code>，失败会返回没有这个命令）</li>
+</ul>
+<h1 id="更新pip至最新版本"><a href="#更新pip至最新版本" class="headerlink" title="更新pip至最新版本"></a>更新pip至最新版本</h1><ul>
+<li>在<code>cmd窗口</code>使用<code>pip list</code>命令检查pip是否安装成功（成功的话会显示当前<code>pip</code>的版本和<code>setuptool</code>的版本）</li>
+<li>输入<code>python -m pip install -U pip</code>命令升级<code>pip</code>至最新版本</li>
+<li>再输入<code>pip list</code>检查当前<code>pip</code>版本（当前<code>pip</code>的最新版本为<code>8.1.0</code>版本）</li>
+</ul>
+<h1 id="更换pip的镜像源为上海大学开源社区镜像源"><a href="#更换pip的镜像源为上海大学开源社区镜像源" class="headerlink" title="更换pip的镜像源为上海大学开源社区镜像源"></a>更换pip的镜像源为上海大学开源社区镜像源</h1><ul>
+<li>由于pip的默认服务器在美国，日常使用<code>pip install</code>命令会出现超时，所以我们要把镜像源更换为<code>上海大学开源社区pip镜像源</code></li>
+<li>更换方法是，在当前windows用户的主目录，添加一个<code>pip</code>文件夹，在<code>pip</code>文件夹中新建一个<code>pip.ini</code>文件，并把以下内容写入文件：<pre><code>[global]
+index-url=https://pypi.shuosc.org/simple
+[list]
+format=columns
+</code></pre></li>
+</ul>
+<h1 id="安装django1-9-4（当前最新版本）"><a href="#安装django1-9-4（当前最新版本）" class="headerlink" title="安装django1.9.4（当前最新版本）"></a>安装django1.9.4（当前最新版本）</h1><p>新开一个cmd窗口，在窗口中输入<code>pip install django</code>命令来安装<code>django</code>最新版本</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;下载并安装python3-5-1&quot;&gt;&lt;a href=&quot;#下载并安装python3-5-1&quot; class=&quot;headerlink&quot; title=&quot;下载并安装python3.5.1&quot;&gt;&lt;/a&gt;下载并安装python3.5.1&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;p
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="windows" scheme="https://lisz.io/tags/windows/"/>
+    
+      <category term="pip" scheme="https://lisz.io/tags/pip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>腾讯云服务器CVM作为MYSQL遇到远程无法连接的解决办法</title>
+    <link href="https://lisz.io/2016/03/03/tencent-mysql/"/>
+    <id>https://lisz.io/2016/03/03/tencent-mysql/</id>
+    <published>2016-03-03T14:04:40.000Z</published>
+    <updated>2017-03-23T14:12:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="修改mysql配置"><a href="#修改mysql配置" class="headerlink" title="修改mysql配置"></a>修改mysql配置</h1><p>首先需要确认安装的mysql服务器的配置文件/etc/mysql/my.cnf是否将bindless 120.0.0.1:0注释掉，务必保证已注释；</p>
+<h1 id="更新腾讯云服务器的安全组策略"><a href="#更新腾讯云服务器的安全组策略" class="headerlink" title="更新腾讯云服务器的安全组策略"></a>更新腾讯云服务器的安全组策略</h1><ol>
+<li>在云服务器列表中选择安全组</li>
+<li>在安全组中新建一个安全组，名称任意</li>
+<li>添加入站规则和出站规则</li>
+<li>将云服务器主机添加入新建的安全组，并从其他安全组中退出。</li>
+</ol>
+<blockquote>
+<p>入站规则是指外网可以访问服务器的端口，即服务器对外开放资源获取的端口；出站规则是指服务器访问网络上的策略，一般是全部开放，（除非有特殊限制要求，本问题的解决不考虑，所以设为ALL TRAFFIC）</p>
+</blockquote>
+<h1 id="在腾讯云服务操作面板中重启服务器使安全组生效"><a href="#在腾讯云服务操作面板中重启服务器使安全组生效" class="headerlink" title="在腾讯云服务操作面板中重启服务器使安全组生效"></a>在腾讯云服务操作面板中重启服务器使安全组生效</h1><h1 id="在客户端系统中使用Navicat等软件连接MYSQL数据库"><a href="#在客户端系统中使用Navicat等软件连接MYSQL数据库" class="headerlink" title="在客户端系统中使用Navicat等软件连接MYSQL数据库"></a>在客户端系统中使用Navicat等软件连接MYSQL数据库</h1><h1 id="就这样，一台MYSQL数据库服务器就搭建完毕了"><a href="#就这样，一台MYSQL数据库服务器就搭建完毕了" class="headerlink" title="就这样，一台MYSQL数据库服务器就搭建完毕了"></a>就这样，一台MYSQL数据库服务器就搭建完毕了</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;修改mysql配置&quot;&gt;&lt;a href=&quot;#修改mysql配置&quot; class=&quot;headerlink&quot; title=&quot;修改mysql配置&quot;&gt;&lt;/a&gt;修改mysql配置&lt;/h1&gt;&lt;p&gt;首先需要确认安装的mysql服务器的配置文件/etc/mysql/my.cnf是否将
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="腾讯云" scheme="https://lisz.io/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/"/>
+    
+      <category term="Mysql" scheme="https://lisz.io/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>腾讯云服务器重装系统后……</title>
-    <link href="https://lisz.io/2017/03/15/tencent-down/"/>
-    <id>https://lisz.io/2017/03/15/tencent-down/</id>
-    <published>2017-03-15T08:36:27.000Z</published>
-    <updated>2017-03-23T13:59:47.000Z</updated>
+    <link href="https://lisz.io/2016/03/02/tencent-down/"/>
+    <id>https://lisz.io/2016/03/02/tencent-down/</id>
+    <published>2016-03-02T08:36:27.000Z</published>
+    <updated>2017-03-23T14:12:15.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="一、添加用户并设为sudo权限"><a href="#一、添加用户并设为sudo权限" class="headerlink" title="一、添加用户并设为sudo权限"></a>一、添加用户并设为sudo权限</h1><p><code>sudo useradd 用户名</code><br><code>sudo passwd 用户名</code><br><code>sudo chmod +w /etc/sudoers</code><br><code>sudo vi  /etc/sudoers (加入 用户名 ALL=(ALL:ALL) ALL )</code></p>
 <h1 id="二、更改用户linux的shell的操作方法"><a href="#二、更改用户linux的shell的操作方法" class="headerlink" title="二、更改用户linux的shell的操作方法"></a>二、更改用户linux的shell的操作方法</h1><p>查看当前用户的shell方式 <code>echo $SHELL</code>    输出 <code>/bin/sh</code><br>更换shell操作方式为<code>/bin/bash</code>   <code>sudo vi /etc/passwd</code>  在用户行尾加上<code>/bin/bash</code><br>退出系统再次登录</p>
@@ -32,15 +150,19 @@
     
     </summary>
     
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="腾讯云" scheme="https://lisz.io/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu14.04安装composer+laravel配置</title>
-    <link href="https://lisz.io/2017/03/15/ubuntu-composer/"/>
-    <id>https://lisz.io/2017/03/15/ubuntu-composer/</id>
-    <published>2017-03-15T08:29:05.000Z</published>
-    <updated>2017-03-15T16:27:52.000Z</updated>
+    <link href="https://lisz.io/2016/02/05/ubuntu-composer/"/>
+    <id>https://lisz.io/2016/02/05/ubuntu-composer/</id>
+    <published>2016-02-05T08:29:05.000Z</published>
+    <updated>2017-03-23T14:22:22.000Z</updated>
     
     <content type="html"><![CDATA[<p>安装前提：系统已安装好php环境，可在全局使用php命令</p>
 <h1 id="安装compsoer并设置为全局调用"><a href="#安装compsoer并设置为全局调用" class="headerlink" title="安装compsoer并设置为全局调用"></a>安装compsoer并设置为全局调用</h1><pre><code class="bash">curl -sS https://getcomposer.org/installer | php
@@ -61,11 +183,11 @@ mv composer.phar /usr/local/bin/composer
       <category term="tech" scheme="https://lisz.io/categories/tech/"/>
     
     
+      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
+    
       <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
     
       <category term="composer" scheme="https://lisz.io/tags/composer/"/>
-    
-      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
     
   </entry>
   
@@ -204,9 +326,9 @@ sudo apt-get install shadowsocks-qt5
       <category term="tech" scheme="https://lisz.io/categories/tech/"/>
     
     
-      <category term="composer" scheme="https://lisz.io/tags/composer/"/>
-    
       <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
+    
+      <category term="composer" scheme="https://lisz.io/tags/composer/"/>
     
       <category term="windows" scheme="https://lisz.io/tags/windows/"/>
     
