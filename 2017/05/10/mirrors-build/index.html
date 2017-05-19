@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>镜像站构建 | Mr Li | zhonger’s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="mirror,build,rsync,cran,wget,bandsnatch">
+    <meta name="description" content="引言构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行同步，少部分源比较特殊，比如pypi源必须采用官方提供的bandsnatch工具，mysql源则只能采用wget的方式镜像整站。
+linux镜像
+采用rsync工具
+
+
+pypi镜像安装bandersnatchsudo pip install bander">
+<meta property="og:type" content="article">
+<meta property="og:title" content="镜像站构建">
+<meta property="og:url" content="https://lisz.io/2017/05/10/mirrors-build/index.html">
+<meta property="og:site_name" content="Mr Li">
+<meta property="og:description" content="引言构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行同步，少部分源比较特殊，比如pypi源必须采用官方提供的bandsnatch工具，mysql源则只能采用wget的方式镜像整站。
+linux镜像
+采用rsync工具
+
+
+pypi镜像安装bandersnatchsudo pip install bander">
+<meta property="og:updated_time" content="2017-05-10T02:19:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="镜像站构建">
+<meta name="twitter:description" content="引言构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行同步，少部分源比较特殊，比如pypi源必须采用官方提供的bandsnatch工具，mysql源则只能采用wget的方式镜像整站。
+linux镜像
+采用rsync工具
+
+
+pypi镜像安装bandersnatchsudo pip install bander">
+    
+        <link rel="alternative" href="/atom.xml" title="Mr Li" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/images/tree2.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/images/201233182266986.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhonger</h5>
+          <a href="mailto:wuwozhonger@gmail.com" title="wuwozhonger@gmail.com" class="mail">wuwozhonger@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签云
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zhonger" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/lishengzhou" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">镜像站构建</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">镜像站构建</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-05-10T02:02:50.000Z" itemprop="datePublished" class="page-time">
+  2017-05-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#引言"><span class="post-toc-number">1.</span> <span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#linux镜像"><span class="post-toc-number">2.</span> <span class="post-toc-text">linux镜像</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#pypi镜像"><span class="post-toc-number">3.</span> <span class="post-toc-text">pypi镜像</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装bandersnatch"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">安装bandersnatch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#尝试启动bandersnatch"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">尝试启动bandersnatch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建bandersnatch-conf文件（文件内容如下）"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">创建bandersnatch.conf文件（文件内容如下）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#启动bandersnatch"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">启动bandersnatch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置web-服务器到同步路径"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">配置web 服务器到同步路径</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#其他镜像"><span class="post-toc-number">4.</span> <span class="post-toc-text">其他镜像</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-mirrors-build"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">镜像站构建</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年05月10日 10:02" datetime="2017-05-10T02:02:50.000Z"  itemprop="datePublished">2017-05-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">tech</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行同步，少部分源比较特殊，比如pypi源必须采用官方提供的bandsnatch工具，mysql源则只能采用wget的方式镜像整站。</p>
+<h1 id="linux镜像"><a href="#linux镜像" class="headerlink" title="linux镜像"></a>linux镜像</h1><ul>
+<li>采用<code>rsync</code>工具</li>
+<li></li>
+</ul>
+<h1 id="pypi镜像"><a href="#pypi镜像" class="headerlink" title="pypi镜像"></a>pypi镜像</h1><h2 id="安装bandersnatch"><a href="#安装bandersnatch" class="headerlink" title="安装bandersnatch"></a>安装bandersnatch</h2><p><code>sudo pip install bandersnatch</code></p>
+<h2 id="尝试启动bandersnatch"><a href="#尝试启动bandersnatch" class="headerlink" title="尝试启动bandersnatch"></a>尝试启动bandersnatch</h2><p><code>bandersnatch mirror</code>  （返回没有/etc/bandersnatch.conf文件错误）</p>
+<h2 id="创建bandersnatch-conf文件（文件内容如下）"><a href="#创建bandersnatch-conf文件（文件内容如下）" class="headerlink" title="创建bandersnatch.conf文件（文件内容如下）"></a>创建bandersnatch.conf文件（文件内容如下）</h2><pre><code>[mirror]
+directory = /srv/pypi
+master = https://pypi.python.org
+</code></pre><h2 id="启动bandersnatch"><a href="#启动bandersnatch" class="headerlink" title="启动bandersnatch"></a>启动bandersnatch</h2><pre><code>tmux
+bandersnatch mirror
+ctrl+b+d
+</code></pre><p>（tmux为终端会话工具，<code>ctrl+b+d</code>让任务在后台执行）</p>
+<h2 id="配置web-服务器到同步路径"><a href="#配置web-服务器到同步路径" class="headerlink" title="配置web 服务器到同步路径"></a>配置web 服务器到同步路径</h2><p>web服务的根目录为<code>/srv/pypi/web</code><br>在linux系统用户配置中修改pypi默认镜像（<code>～/.pip/pip.conf</code>）</p>
+<pre><code>[global]
+index-url = https://pypi.doubanio.com/simple/  （该地址修改为web服务器对应地址）
+</code></pre><h1 id="其他镜像"><a href="#其他镜像" class="headerlink" title="其他镜像"></a>其他镜像</h1><ul>
+<li>采用wget镜像<code>nodejs.org</code>站点<pre><code>wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://nodejs.org/dist  -e robots=off
+</code></pre></li>
+<li></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-05-10T02:19:24.000Z" itemprop="dateUpdated">2017年5月10日 10:19</time>
+</span><br>
+
+
+        转载请注明来源：<a href="/2017/05/10/mirrors-build/" target="_blank" rel="external">https://lisz.io/2017/05/10/mirrors-build/</a>
+    </div>
+    <footer>
+        <a href="https://lisz.io">
+            <img src="/images/201233182266986.jpg" alt="zhonger">
+            zhonger
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bandsnatch/">bandsnatch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build/">build</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cran/">cran</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mirror/">mirror</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rsync/">rsync</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wget/">wget</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2017/05/10/mirrors-build/&title=《镜像站构建》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2017/05/10/mirrors-build/&title=《镜像站构建》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2017/05/10/mirrors-build/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《镜像站构建》 — Mr Li&url=https://lisz.io/2017/05/10/mirrors-build/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2017/05/10/mirrors-build/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/05/09/docker-init/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">docker平台学习初步</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="mirrors-build" data-title="镜像站构建" data-url="https://lisz.io/2017/05/10/mirrors-build/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'lishengzhou', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Mr Li &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2017/05/10/mirrors-build/&title=《镜像站构建》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2017/05/10/mirrors-build/&title=《镜像站构建》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2017/05/10/mirrors-build/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《镜像站构建》 — Mr Li&url=https://lisz.io/2017/05/10/mirrors-build/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2017/05/10/mirrors-build/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3aSw7CMAwFQO5/6bJFQoRnO41AmqwQrZrJxvInj0e8rg/r/enrP+unr/9sXri4uGPutVz5Bu9Pr2DlBlxc3PPc9fbVd6545d/HxcX9F26SjeTHw8XF/V/uvLA5GshwcXEH3EkK8qVcKbZOttVquLi4A241Wbnj9y39XVxc3Bb3Kq6kMZqEsObuuLi4R7h5QEm2nB8gehMXF/cIN29wrBugk1JqXQgVOiu4uLibuOtglKc1uxqvUYqDi4t7hDsfchS2bLVTcXFxT3InbdPqwKOXQuHi4p7nrjfuXcTsBcdy8YOLi3sDN6FUZ529AikKZLi4uEe468AxGbVWv1kIfLi4uEe41WJm19NRrYaLi3uEW21/9C5e9I60oVuDi4tb5PaGoL1ma15cRffIcHFxb+ZW26DVaxa9oiiq1XBxcW/j5ilIL1TlQbBQ6uDi4t7AnQxN162NnFVIm3BxcY9w50Fqcu8j6dY0D4OLizvmVoNXbzSbvBk1UHBxcQ9y5xOYPKhtrtVwcXF/ktsbk4wqNlxc3J/k5lcte02Tj0JcXNyD3N4gJGln9NoizZkwLi7uJm45lLRSk/wA88CHi4s74D4BDO7iMbzeSJcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+
+
+</body>
+</html>

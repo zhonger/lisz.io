@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lisz.io/"/>
-  <updated>2017-03-23T14:27:46.000Z</updated>
+  <updated>2017-05-10T02:19:24.000Z</updated>
   <id>https://lisz.io/</id>
   
   <author>
@@ -14,6 +14,131 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>镜像站构建</title>
+    <link href="https://lisz.io/2017/05/10/mirrors-build/"/>
+    <id>https://lisz.io/2017/05/10/mirrors-build/</id>
+    <published>2017-05-10T02:02:50.000Z</published>
+    <updated>2017-05-10T02:19:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行同步，少部分源比较特殊，比如pypi源必须采用官方提供的bandsnatch工具，mysql源则只能采用wget的方式镜像整站。</p>
+<h1 id="linux镜像"><a href="#linux镜像" class="headerlink" title="linux镜像"></a>linux镜像</h1><ul>
+<li>采用<code>rsync</code>工具</li>
+<li></li>
+</ul>
+<h1 id="pypi镜像"><a href="#pypi镜像" class="headerlink" title="pypi镜像"></a>pypi镜像</h1><h2 id="安装bandersnatch"><a href="#安装bandersnatch" class="headerlink" title="安装bandersnatch"></a>安装bandersnatch</h2><p><code>sudo pip install bandersnatch</code></p>
+<h2 id="尝试启动bandersnatch"><a href="#尝试启动bandersnatch" class="headerlink" title="尝试启动bandersnatch"></a>尝试启动bandersnatch</h2><p><code>bandersnatch mirror</code>  （返回没有/etc/bandersnatch.conf文件错误）</p>
+<h2 id="创建bandersnatch-conf文件（文件内容如下）"><a href="#创建bandersnatch-conf文件（文件内容如下）" class="headerlink" title="创建bandersnatch.conf文件（文件内容如下）"></a>创建bandersnatch.conf文件（文件内容如下）</h2><pre><code>[mirror]
+directory = /srv/pypi
+master = https://pypi.python.org
+</code></pre><h2 id="启动bandersnatch"><a href="#启动bandersnatch" class="headerlink" title="启动bandersnatch"></a>启动bandersnatch</h2><pre><code>tmux
+bandersnatch mirror
+ctrl+b+d
+</code></pre><p>（tmux为终端会话工具，<code>ctrl+b+d</code>让任务在后台执行）</p>
+<h2 id="配置web-服务器到同步路径"><a href="#配置web-服务器到同步路径" class="headerlink" title="配置web 服务器到同步路径"></a>配置web 服务器到同步路径</h2><p>web服务的根目录为<code>/srv/pypi/web</code><br>在linux系统用户配置中修改pypi默认镜像（<code>～/.pip/pip.conf</code>）</p>
+<pre><code>[global]
+index-url = https://pypi.doubanio.com/simple/  （该地址修改为web服务器对应地址）
+</code></pre><h1 id="其他镜像"><a href="#其他镜像" class="headerlink" title="其他镜像"></a>其他镜像</h1><ul>
+<li>采用wget镜像<code>nodejs.org</code>站点<pre><code>wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://nodejs.org/dist  -e robots=off
+</code></pre></li>
+<li></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="mirror" scheme="https://lisz.io/tags/mirror/"/>
+    
+      <category term="build" scheme="https://lisz.io/tags/build/"/>
+    
+      <category term="rsync" scheme="https://lisz.io/tags/rsync/"/>
+    
+      <category term="cran" scheme="https://lisz.io/tags/cran/"/>
+    
+      <category term="wget" scheme="https://lisz.io/tags/wget/"/>
+    
+      <category term="bandsnatch" scheme="https://lisz.io/tags/bandsnatch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker平台学习初步</title>
+    <link href="https://lisz.io/2017/05/09/docker-init/"/>
+    <id>https://lisz.io/2017/05/09/docker-init/</id>
+    <published>2017-05-09T04:43:31.000Z</published>
+    <updated>2017-05-10T02:03:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="docker" scheme="https://lisz.io/tags/docker/"/>
+    
+      <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu16.04下安装nvidia gtx 970显卡驱动</title>
+    <link href="https://lisz.io/2017/05/09/ubuntu-nvidia/"/>
+    <id>https://lisz.io/2017/05/09/ubuntu-nvidia/</id>
+    <published>2017-05-09T04:02:49.000Z</published>
+    <updated>2017-05-10T02:46:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h1><ul>
+<li>Ubuntu 16.04 Desktop (内核版本：4.8.0-46-generic)</li>
+<li>显卡：GTX-960</li>
+</ul>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载NVIDIA驱动程序"><a href="#下载NVIDIA驱动程序" class="headerlink" title="下载NVIDIA驱动程序"></a>下载NVIDIA驱动程序</h2><ul>
+<li>在<a href="http://www.nvidia.cn/Download/index.aspx?lang=cn" target="_blank" rel="external">nvidia官网下载</a>对应的驱动（<code>.run</code>文件）<h2 id="删除旧驱动"><a href="#删除旧驱动" class="headerlink" title="删除旧驱动"></a>删除旧驱动</h2></li>
+<li><code>sudo apt-get purge nvidia*</code>（如果返回卸载成功或无匹配结果均可）<h2 id="禁用自带的nouveau-nvidia驱动"><a href="#禁用自带的nouveau-nvidia驱动" class="headerlink" title="禁用自带的nouveau nvidia驱动"></a>禁用自带的nouveau nvidia驱动</h2></li>
+<li>通过命令<code>sudo vim /etc/modprobe.d/blacklist-nouveau.conf</code>创建文件，并添加内容如下：<pre><code>blacklist nouveau
+options nouveau modeset=0
+</code></pre></li>
+<li>执行更新命令<code>sudo update-initramfs -u</code>，并重启操作系统（重启后可用<code>lsmod | grep nouveau</code>检查是否禁用成功）<h2 id="安装内核头"><a href="#安装内核头" class="headerlink" title="安装内核头"></a>安装内核头</h2></li>
+<li>通过命令安装<pre><code class="shell">sudo apt-get install linux-headers-$(uname -r)
+</code></pre>
+</li>
+</ul>
+<h1 id="正式安装过程"><a href="#正式安装过程" class="headerlink" title="正式安装过程"></a>正式安装过程</h1><ul>
+<li>通过命令<code>sudo service lightdm stop</code>关闭<code>x-window</code></li>
+<li>执行NVIDIA驱动安装程序<code>sudo sh NVIDIA.run</code>（<code>.run</code>文件需提前赋予执行权限）</li>
+<li>一步一步选择下去执行安装即可，最终显示安装成功</li>
+<li>通过命令<code>sudo service lightdm start</code>开启<code>x-window</code></li>
+</ul>
+<h1 id="完成显卡驱动安装"><a href="#完成显卡驱动安装" class="headerlink" title="完成显卡驱动安装"></a>完成显卡驱动安装</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;实验环境&quot;&gt;&lt;a href=&quot;#实验环境&quot; class=&quot;headerlink&quot; title=&quot;实验环境&quot;&gt;&lt;/a&gt;实验环境&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;Ubuntu 16.04 Desktop (内核版本：4.8.0-46-generic)&lt;/li&gt;
+&lt;li&gt;显卡
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
+    
+      <category term="nvidia" scheme="https://lisz.io/tags/nvidia/"/>
+    
+  </entry>
   
   <entry>
     <title>laravel5.2在lnmpa一键安装包环境下的部署</title>
@@ -183,9 +308,9 @@ mv composer.phar /usr/local/bin/composer
       <category term="tech" scheme="https://lisz.io/categories/tech/"/>
     
     
-      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
-    
       <category term="ubuntu" scheme="https://lisz.io/tags/ubuntu/"/>
+    
+      <category term="laravel" scheme="https://lisz.io/tags/laravel/"/>
     
       <category term="composer" scheme="https://lisz.io/tags/composer/"/>
     
