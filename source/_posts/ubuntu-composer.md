@@ -1,6 +1,6 @@
 ---
 title: ubuntu14.04安装composer+laravel配置
-date: 2017-03-15 16:29:05
+date: 2016-02-05 16:29:05
 tags:
 - ubuntu
 - composer
