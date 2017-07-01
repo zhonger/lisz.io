@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lisz.io/"/>
-  <updated>2017-05-10T02:19:24.000Z</updated>
+  <updated>2017-07-01T08:14:11.000Z</updated>
   <id>https://lisz.io/</id>
   
   <author>
@@ -16,11 +16,114 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在linux系统上没有磁盘阵列实现合并磁盘</title>
+    <link href="https://lisz.io/2017/07/01/linux-lvm/"/>
+    <id>https://lisz.io/2017/07/01/linux-lvm/</id>
+    <published>2017-07-01T06:27:06.000Z</published>
+    <updated>2017-07-01T08:14:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><ul>
+<li><code>物理存储</code>:指的是物理的硬盘，在<code>/dev</code>目录下的<code>sda</code>、<code>sdb</code>等</li>
+<li><code>物理卷</code>:指的是物理硬盘上的分区或逻辑上与磁盘分区具有相同功能的设备，是LVM的基本存储块，但和分区相比，却包含了与LVM管理相关的参数</li>
+<li><code>卷组</code>:LVM的卷组类似于物理硬盘，卷组上边可以建立多个虚拟的分区，LVM卷组由一个或多个物理卷组成</li>
+<li><code>逻辑卷</code>:LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷上边可以建立文件系统，用于mount到不同的挂载点，提升分区空间——<code>真正跟用户打交道的部分</code></li>
+<li><code>Physcial Extent</code>:每一个物理卷被划分为一个个的基本存储单元，每一个PE都具有唯一的编址（类似于物理磁盘上的磁盘地址），PE的大小默认为4MB</li>
+<li><code>Logical Extent</code>:每一个逻辑卷也被划分为一个个的基本存储单元，每一个LE也具有唯一的编址，在同一个卷组中，LE和PE的大小是相等的</li>
+</ul>
+<h1 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h1><ul>
+<li>Ubuntu Server 16.04 LTS </li>
+<li>已安装好系统的1T硬盘</li>
+<li>2块2T空硬盘</li>
+</ul>
+<h1 id="实验步骤-在root用户下操作"><a href="#实验步骤-在root用户下操作" class="headerlink" title="实验步骤(在root用户下操作)"></a>实验步骤(在root用户下操作)</h1><h2 id="第一步-分区"><a href="#第一步-分区" class="headerlink" title="第一步 分区"></a>第一步 分区</h2><ul>
+<li>格式化<code>fdisk /dev/sda</code><pre><code>Command(m for help): n  (创建新分区)
+</code></pre></li>
+<li>接下来选择创建主分区、默认分区号为1，把所有空间全部分配给这个分区(默认即可)</li>
+<li>使用<code>p</code>查看分区情况，使用<code>t</code>命令(<code>30</code>为<code>Linux LVM</code>)<pre><code>Hex code (type L to list codes): 30
+</code></pre></li>
+<li>最后再用<code>w</code>命令保存分区表</li>
+<li>另外一块也按照以上的步骤格式化为<code>LVM</code>格式</li>
+</ul>
+<h2 id="第二步-建立LVM分区和VG逻辑卷组"><a href="#第二步-建立LVM分区和VG逻辑卷组" class="headerlink" title="第二步 建立LVM分区和VG逻辑卷组"></a>第二步 建立LVM分区和VG逻辑卷组</h2><pre><code>pvcreate /dev/sda1 /dev/sdb1
+pvdisplay
+vgextend asc-vg /dev/sda1 /dev/sdb1 (或者vgcreate extspace /dev/sda1 /dev/sdb1)
+vgdisplay
+</code></pre><h2 id="第三步-创建逻辑卷"><a href="#第三步-创建逻辑卷" class="headerlink" title="第三步 创建逻辑卷"></a>第三步 创建逻辑卷</h2><pre><code>lvcreate --name data --size 3.6T asc-vg
+lvdisplay
+</code></pre><h2 id="第四步-挂载逻辑卷"><a href="#第四步-挂载逻辑卷" class="headerlink" title="第四步 挂载逻辑卷"></a>第四步 挂载逻辑卷</h2><pre><code>mkfs.ext4 /dev/asc-vg/data 
+mount /dev/asc-vg/data /home/data
+</code></pre><h2 id="第五步-配置自动挂载"><a href="#第五步-配置自动挂载" class="headerlink" title="第五步 配置自动挂载"></a>第五步 配置自动挂载</h2><ul>
+<li>修改<code>/etc/fstab</code>，增加以下几行：<pre><code>/dev/asc-vg/data /home/data ext4 rw,noatime 0 0
+</code></pre></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;物理存储&lt;/code&gt;:指的是物理的硬盘，在&lt;code&gt;/dev&lt;/code&gt;目录下的&lt;code&gt;s
+    
+    </summary>
+    
+    
+      <category term="linux" scheme="https://lisz.io/tags/linux/"/>
+    
+      <category term="lvm" scheme="https://lisz.io/tags/lvm/"/>
+    
+      <category term="合并磁盘" scheme="https://lisz.io/tags/%E5%90%88%E5%B9%B6%E7%A3%81%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用caddy和apache搭建php环境</title>
+    <link href="https://lisz.io/2017/06/21/caddy-apache/"/>
+    <id>https://lisz.io/2017/06/21/caddy-apache/</id>
+    <published>2017-06-21T12:53:02.000Z</published>
+    <updated>2017-06-21T13:30:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="caddy篇"><a href="#caddy篇" class="headerlink" title="caddy篇"></a>caddy篇</h1><h2 id="安装caddy"><a href="#安装caddy" class="headerlink" title="安装caddy"></a>安装caddy</h2><pre><code>$ curl https://getcaddy.com | bash
+</code></pre><h2 id="配置Caddyfile"><a href="#配置Caddyfile" class="headerlink" title="配置Caddyfile"></a>配置Caddyfile</h2><pre><code>yun.wl27.cn {
+    gzip
+    proxy / http://127.0.0.1:10080
+}
+</code></pre><h2 id="安装并配置supervisor"><a href="#安装并配置supervisor" class="headerlink" title="安装并配置supervisor"></a>安装并配置supervisor</h2><pre><code>$ sudo pip install supervisor
+</code></pre><p><code>/etc/supervisord.conf</code></p>
+<pre><code>[program:caddy]
+command=caddy -conf /root/Caddyfile
+user=root
+autostart=true
+autorestart=true
+startsecs=3
+stderr_logfile=/tmp/caddy_err.log
+stdout_logfile=/tmp/caddy.log
+
+[supervisord]
+</code></pre><h1 id="安装apache"><a href="#安装apache" class="headerlink" title="安装apache"></a>安装apache</h1><pre><code>$ sudo apt-get install apache2 
+$ sudo a2enmod rewrite env headers mime dir setenvif
+</code></pre><h1 id="php篇"><a href="#php篇" class="headerlink" title="php篇"></a>php篇</h1><h2 id="安装php7-0"><a href="#安装php7-0" class="headerlink" title="安装php7.0"></a>安装php7.0</h2><pre><code>$ sudo apt-get install python-software-properties
+$ sudo add-apt-repository ppa:ondrej/php
+$ sudo apt-get update
+$ sudo apt-get install -y php7.0
+$ sudo apt-get install libapache2-mod-php7.0 php7.0-mysql php7.0-curl php7.0-json php7.0-common php7.0-gd php7.0-zip php7.0-xml php7.0-mbstring
+</code></pre><h2 id="配置虚拟主机"><a href="#配置虚拟主机" class="headerlink" title="配置虚拟主机"></a>配置虚拟主机</h2><p><code>/etc/apache2/sites-available</code></p>
+<pre><code>
+</code></pre><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;caddy篇&quot;&gt;&lt;a href=&quot;#caddy篇&quot; class=&quot;headerlink&quot; title=&quot;caddy篇&quot;&gt;&lt;/a&gt;caddy篇&lt;/h1&gt;&lt;h2 id=&quot;安装caddy&quot;&gt;&lt;a href=&quot;#安装caddy&quot; class=&quot;headerlink&quot; ti
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>镜像站构建</title>
     <link href="https://lisz.io/2017/05/10/mirrors-build/"/>
     <id>https://lisz.io/2017/05/10/mirrors-build/</id>
     <published>2017-05-10T02:02:50.000Z</published>
-    <updated>2017-05-10T02:19:24.000Z</updated>
+    <updated>2017-06-21T10:30:32.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>构建镜像站主要是对于linux开源平台的软件源、pypi源、cran源、mysql等开源软件第三方源，大部分源支持使用rsync工具直接进行同步，少部分源比较特殊，比如pypi源必须采用官方提供的bandsnatch工具，mysql源则只能采用wget的方式镜像整站。</p>
 <h1 id="linux镜像"><a href="#linux镜像" class="headerlink" title="linux镜像"></a>linux镜像</h1><ul>
