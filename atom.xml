@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lisz.io/"/>
-  <updated>2017-07-01T08:14:11.000Z</updated>
+  <updated>2017-07-19T08:28:07.000Z</updated>
   <id>https://lisz.io/</id>
   
   <author>
@@ -14,6 +14,94 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>archlinux入门初步</title>
+    <link href="https://lisz.io/2017/07/19/arch-tutorial/"/>
+    <id>https://lisz.io/2017/07/19/arch-tutorial/</id>
+    <published>2017-07-19T07:23:10.000Z</published>
+    <updated>2017-07-19T08:28:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="制作archlinux启动盘"><a href="#制作archlinux启动盘" class="headerlink" title="制作archlinux启动盘"></a>制作<code>archlinux</code>启动盘</h1><ul>
+<li>从<code>archlinux</code>官方或者是镜像源下载到iso文件</li>
+<li>使用以下命令制作启动U盘<pre><code>dd if=image.iso of=/dev/sd[x]
+</code></pre><blockquote>
+<p>参考自<a href="https://wiki.archlinux.org/index.php/USB_flash_installation_media" target="_blank" rel="external">Install_from_a_USB_flash_drive</a></p>
+</blockquote>
+</li>
+</ul>
+<h1 id="安装准备"><a href="#安装准备" class="headerlink" title="安装准备"></a>安装准备</h1><ul>
+<li>电脑插入启动U盘，并选择从U盘的<code>uefi</code>模式启动</li>
+<li>键盘布局: <code>loadkeys us</code></li>
+<li>验证启动模式: <code>ls /sys/firmware/efi/efivars</code>，如果目录不存在，系统即为<code>BIOS</code>或<code>CSM</code>模式启动</li>
+<li>联网: <code>ping -c 3 www.baidu.com</code>，若发现网络不通，则<code>systemctl stop dhcpcd</code>停用dhcpcd进程</li>
+<li>更新系统时间: <code>timedatectl set-ntp true</code>，用<code>timedatectl status</code>检查服务状态</li>
+<li>建立硬盘分区: 比如磁盘为<code>/dev/sda</code>，则使用<code>fdisk /dev/sda</code>对磁盘进行操作；首先使用<code>g</code>转换成<code>gpt</code>分区格式；其次使用<code>n</code>分别建立<code>512MB</code>的EFI分区和剩余硬盘大小的根目录分区</li>
+<li>挂载分区: <pre><code>mount /dev/sda2 /mnt
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+</code></pre></li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li>选择镜像地址: 编辑<code>/etc/pacman.d/mirrorlist</code>，建议使用以下首选<code>mirror</code><pre><code>Server = https://mirrors.shuosc.org/archlinux/$repo/os/$arch
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+</code></pre></li>
+<li>安装基本系统及AUR: <code>pacstrap /mnt base base-devel</code></li>
+</ul>
+<h1 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h1><ul>
+<li>Fstab: <code>genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</code></li>
+<li>Chroot: 使用<code>arch-chroot /mnt</code>Change root到新的安装系统</li>
+<li>时区: 使用以下命令设置时区及时间标准为<code>UTC</code><pre><code>ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+hwclock --systohc --utc
+</code></pre></li>
+<li>Locale: 修改<code>/etc/locale.gen</code>文件，将所需语言前的注释删除，比如以下几个，再使用<code>locale-gen</code>生成locale配置文件，并提交默认语言<pre><code>en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+zh_SG.UTF-8 UTF-8
+zh_TW.UTF-8 UTF-8
+</code></pre><pre><code>locale-gen
+echo LANG=en_US.UTF-8 &gt; /etc/locale.conf
+</code></pre></li>
+<li>主机名: 使用<code>echo arch &gt; /etc/hostname</code>设置主机名，并添加对应信息至<code>/etc/hosts</code>，如下所示：<pre><code>127.0.1.1        arch.localdomain  arch
+</code></pre></li>
+<li>网络配置: 使用<code>systemctl enable dhcpcd.service</code>让<code>DHCP</code>服务开机自启动</li>
+<li>设置用户: 首先如下新增用户，然后往<code>/etc/sudoers</code>添加<code>username ALL=(ALL) NOPASSWD:ALL</code><pre><code>useradd username
+passwd username
+mkdir /home/username
+chown -R username:username /home/username
+</code></pre></li>
+<li>安装引导程序: <pre><code>pacman -S grub os-prober efibootmgr dosfstools
+grub-install --target-x86_64-efi --efi-directory=/boot --bootloader-id=grub --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></li>
+</ul>
+<h1 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h1><ul>
+<li>配置显卡: 使用<code>pacman -S nvidia</code>安装nvidia驱动，删除<code>/etc/pacman.conf</code>中的<code>multilib</code>部分注释，使用<code>pacman -Syy</code>刷新软件缓存，<code>pacman -S lib32-nvidia-utils</code>安装对应的基本库。参考自<a href="https://wiki.archlinux.org/index.php/NVIDIA" target="_blank" rel="external">NVIDIA</a></li>
+<li>安装xorg: <pre><code>pacman -S xorg
+nvidia-xconfig
+</code></pre></li>
+<li>安装gnome: <pre><code>pacman -S gnome gnome-extra
+pacman -S gnome gdm
+systemctl enable gdm
+</code></pre></li>
+</ul>
+<h1 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h1><p>重启之后从硬盘启动就会进入gdm登录界面，使用上面设置的username和密码登录即可，如果用户名和密码都正确无法登录，说明该用户未建立对应用户主目录</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;制作archlinux启动盘&quot;&gt;&lt;a href=&quot;#制作archlinux启动盘&quot; class=&quot;headerlink&quot; title=&quot;制作archlinux启动盘&quot;&gt;&lt;/a&gt;制作&lt;code&gt;archlinux&lt;/code&gt;启动盘&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;从&lt;c
+    
+    </summary>
+    
+      <category term="tech" scheme="https://lisz.io/categories/tech/"/>
+    
+    
+      <category term="archlinux" scheme="https://lisz.io/tags/archlinux/"/>
+    
+      <category term="setup" scheme="https://lisz.io/tags/setup/"/>
+    
+  </entry>
   
   <entry>
     <title>在linux系统上没有磁盘阵列实现合并磁盘</title>
