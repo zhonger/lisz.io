@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>在linux系统上没有磁盘阵列实现合并磁盘 | Mr Li | zhonger’s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="linux,lvm,合并磁盘">
+    <meta name="description" content="基本概念
+物理存储:指的是物理的硬盘，在/dev目录下的sda、sdb等
+物理卷:指的是物理硬盘上的分区或逻辑上与磁盘分区具有相同功能的设备，是LVM的基本存储块，但和分区相比，却包含了与LVM管理相关的参数
+卷组:LVM的卷组类似于物理硬盘，卷组上边可以建立多个虚拟的分区，LVM卷组由一个或多个物理卷组成
+逻辑卷:LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷上边可以建立文件系统，用于m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在linux系统上没有磁盘阵列实现合并磁盘">
+<meta property="og:url" content="https://lisz.io/2017/07/01/linux-lvm/index.html">
+<meta property="og:site_name" content="Mr Li">
+<meta property="og:description" content="基本概念
+物理存储:指的是物理的硬盘，在/dev目录下的sda、sdb等
+物理卷:指的是物理硬盘上的分区或逻辑上与磁盘分区具有相同功能的设备，是LVM的基本存储块，但和分区相比，却包含了与LVM管理相关的参数
+卷组:LVM的卷组类似于物理硬盘，卷组上边可以建立多个虚拟的分区，LVM卷组由一个或多个物理卷组成
+逻辑卷:LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷上边可以建立文件系统，用于m">
+<meta property="og:updated_time" content="2017-07-01T08:14:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在linux系统上没有磁盘阵列实现合并磁盘">
+<meta name="twitter:description" content="基本概念
+物理存储:指的是物理的硬盘，在/dev目录下的sda、sdb等
+物理卷:指的是物理硬盘上的分区或逻辑上与磁盘分区具有相同功能的设备，是LVM的基本存储块，但和分区相比，却包含了与LVM管理相关的参数
+卷组:LVM的卷组类似于物理硬盘，卷组上边可以建立多个虚拟的分区，LVM卷组由一个或多个物理卷组成
+逻辑卷:LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷上边可以建立文件系统，用于m">
+    
+        <link rel="alternative" href="/atom.xml" title="Mr Li" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/images/tree2.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/images/201233182266986.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhonger</h5>
+          <a href="mailto:wuwozhonger@gmail.com" title="wuwozhonger@gmail.com" class="mail">wuwozhonger@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签云
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/zhonger" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/lishengzhou" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">在linux系统上没有磁盘阵列实现合并磁盘</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">在linux系统上没有磁盘阵列实现合并磁盘</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-01T06:27:06.000Z" itemprop="datePublished" class="page-time">
+  2017-07-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本概念</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实验环境"><span class="post-toc-number">2.</span> <span class="post-toc-text">实验环境</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实验步骤-在root用户下操作"><span class="post-toc-number">3.</span> <span class="post-toc-text">实验步骤(在root用户下操作)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第一步-分区"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">第一步 分区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第二步-建立LVM分区和VG逻辑卷组"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">第二步 建立LVM分区和VG逻辑卷组</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第三步-创建逻辑卷"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">第三步 创建逻辑卷</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第四步-挂载逻辑卷"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">第四步 挂载逻辑卷</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第五步-配置自动挂载"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">第五步 配置自动挂载</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-linux-lvm"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">在linux系统上没有磁盘阵列实现合并磁盘</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年07月01日 14:27" datetime="2017-07-01T06:27:06.000Z"  itemprop="datePublished">2017-07-01</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><ul>
+<li><code>物理存储</code>:指的是物理的硬盘，在<code>/dev</code>目录下的<code>sda</code>、<code>sdb</code>等</li>
+<li><code>物理卷</code>:指的是物理硬盘上的分区或逻辑上与磁盘分区具有相同功能的设备，是LVM的基本存储块，但和分区相比，却包含了与LVM管理相关的参数</li>
+<li><code>卷组</code>:LVM的卷组类似于物理硬盘，卷组上边可以建立多个虚拟的分区，LVM卷组由一个或多个物理卷组成</li>
+<li><code>逻辑卷</code>:LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷上边可以建立文件系统，用于mount到不同的挂载点，提升分区空间——<code>真正跟用户打交道的部分</code></li>
+<li><code>Physcial Extent</code>:每一个物理卷被划分为一个个的基本存储单元，每一个PE都具有唯一的编址（类似于物理磁盘上的磁盘地址），PE的大小默认为4MB</li>
+<li><code>Logical Extent</code>:每一个逻辑卷也被划分为一个个的基本存储单元，每一个LE也具有唯一的编址，在同一个卷组中，LE和PE的大小是相等的</li>
+</ul>
+<h1 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h1><ul>
+<li>Ubuntu Server 16.04 LTS </li>
+<li>已安装好系统的1T硬盘</li>
+<li>2块2T空硬盘</li>
+</ul>
+<h1 id="实验步骤-在root用户下操作"><a href="#实验步骤-在root用户下操作" class="headerlink" title="实验步骤(在root用户下操作)"></a>实验步骤(在root用户下操作)</h1><h2 id="第一步-分区"><a href="#第一步-分区" class="headerlink" title="第一步 分区"></a>第一步 分区</h2><ul>
+<li>格式化<code>fdisk /dev/sda</code><pre><code>Command(m for help): n  (创建新分区)
+</code></pre></li>
+<li>接下来选择创建主分区、默认分区号为1，把所有空间全部分配给这个分区(默认即可)</li>
+<li>使用<code>p</code>查看分区情况，使用<code>t</code>命令(<code>30</code>为<code>Linux LVM</code>)<pre><code>Hex code (type L to list codes): 30
+</code></pre></li>
+<li>最后再用<code>w</code>命令保存分区表</li>
+<li>另外一块也按照以上的步骤格式化为<code>LVM</code>格式</li>
+</ul>
+<h2 id="第二步-建立LVM分区和VG逻辑卷组"><a href="#第二步-建立LVM分区和VG逻辑卷组" class="headerlink" title="第二步 建立LVM分区和VG逻辑卷组"></a>第二步 建立LVM分区和VG逻辑卷组</h2><pre><code>pvcreate /dev/sda1 /dev/sdb1
+pvdisplay
+vgextend asc-vg /dev/sda1 /dev/sdb1 (或者vgcreate extspace /dev/sda1 /dev/sdb1)
+vgdisplay
+</code></pre><h2 id="第三步-创建逻辑卷"><a href="#第三步-创建逻辑卷" class="headerlink" title="第三步 创建逻辑卷"></a>第三步 创建逻辑卷</h2><pre><code>lvcreate --name data --size 3.6T asc-vg
+lvdisplay
+</code></pre><h2 id="第四步-挂载逻辑卷"><a href="#第四步-挂载逻辑卷" class="headerlink" title="第四步 挂载逻辑卷"></a>第四步 挂载逻辑卷</h2><pre><code>mkfs.ext4 /dev/asc-vg/data 
+mount /dev/asc-vg/data /home/data
+</code></pre><h2 id="第五步-配置自动挂载"><a href="#第五步-配置自动挂载" class="headerlink" title="第五步 配置自动挂载"></a>第五步 配置自动挂载</h2><ul>
+<li>修改<code>/etc/fstab</code>，增加以下几行：<pre><code>/dev/asc-vg/data /home/data ext4 rw,noatime 0 0
+</code></pre></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-01T08:14:11.000Z" itemprop="dateUpdated">2017年7月1日 16:14</time>
+</span><br>
+
+
+        转载请注明来源：<a href="/2017/07/01/linux-lvm/" target="_blank" rel="external">https://lisz.io/2017/07/01/linux-lvm/</a>
+    </div>
+    <footer>
+        <a href="https://lisz.io">
+            <img src="/images/201233182266986.jpg" alt="zhonger">
+            zhonger
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lvm/">lvm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/合并磁盘/">合并磁盘</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2017/07/01/linux-lvm/&title=《在linux系统上没有磁盘阵列实现合并磁盘》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2017/07/01/linux-lvm/&title=《在linux系统上没有磁盘阵列实现合并磁盘》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2017/07/01/linux-lvm/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《在linux系统上没有磁盘阵列实现合并磁盘》 — Mr Li&url=https://lisz.io/2017/07/01/linux-lvm/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2017/07/01/linux-lvm/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/19/arch-tutorial/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">archlinux入门初步</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/21/caddy-apache/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用caddy和apache搭建php环境</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="linux-lvm" data-title="在linux系统上没有磁盘阵列实现合并磁盘" data-url="https://lisz.io/2017/07/01/linux-lvm/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'lishengzhou', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Mr Li &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lisz.io/2017/07/01/linux-lvm/&title=《在linux系统上没有磁盘阵列实现合并磁盘》 — Mr Li&pic=https://lisz.io/images/201233182266986.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lisz.io/2017/07/01/linux-lvm/&title=《在linux系统上没有磁盘阵列实现合并磁盘》 — Mr Li&source=This is Mr Li‘s blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lisz.io/2017/07/01/linux-lvm/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《在linux系统上没有磁盘阵列实现合并磁盘》 — Mr Li&url=https://lisz.io/2017/07/01/linux-lvm/&via=https://lisz.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lisz.io/2017/07/01/linux-lvm/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzklEQVR42u3ay46DMBBEUf7/pxlpNLsR5lY37hDpsoqUB8dZlOxqjgNf5+9F3j2X1//PHDsuuXLltrn8BmQB6++uX68NcuXKnefyeOLRdnVL/mty5cp9P3d9MxJDJNTkypX7XVwSSWTTI1eu3G/h8iIjDb6nyhS5cuVOctPCdMfrjf2uXLlyQ+4ZXp3Y6tz37/flypU7wu2MScighWxi4kJWrly5H+J2hqY1SnDQkitX7mZuUFOWHrlIi5WbxciVK3eEm0YJLzQ7JSxamFy5crdx09EIP/DwMiU4RMmVK3eEm5abnW1QLTqLMx+5cuU2uLUHJkhtykON/xFy5cqd4abHFbJIvvVpjVXkypU7wuW3TIcuKS4OWbly5T7KJZuPzri0VqFe/n1y5cod4XaOQGkBmo5hLmNOrly5m7npuDSNp1rlIVeu3DdweQzxOEvHKuhAJVeu3EFuWmjWalMSgq3xiVy5ch/ipoFSq07SQ9QDgShXrtw2t1Zl1oapPMhunhmRK1fuCDftWXkB2g+4y35Xrly5L+CSAUm/VL1Znly5cl/MTY8uZJHogQy5cuUOcsnhhx9jSFGyvRaRK1fuYGFKgi8IplJQypUrdxv3B1jHvlXq7gm6AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+
+
+</body>
+</html>
